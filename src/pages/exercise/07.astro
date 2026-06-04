@@ -1,0 +1,370 @@
+---
+import ExerciseNav from "../../components/ExerciseNav.astro";
+import Layout from "../../layouts/Layout.astro";
+import { docsUrl, suggestedQuestions } from "../../exercise/07-prompt-api-local";
+---
+
+<Layout
+	title="Exercise 07 · Local Prompt API Chat"
+	description="Run the Zara chatbot fully on-device with Chrome's built-in Prompt API (Gemini Nano), with no server and no API key."
+>
+	<div class="relative min-h-screen overflow-hidden">
+		<div
+			class="pointer-events-none absolute inset-0 -z-10 opacity-[0.04]"
+			style="background-image:linear-gradient(var(--color-line) 1px,transparent 1px),linear-gradient(90deg,var(--color-line) 1px,transparent 1px);background-size:64px 64px;"
+		>
+		</div>
+
+		<header class="mx-auto flex max-w-6xl items-center justify-between px-6 py-6">
+			<a href="/" class="flex items-center gap-3">
+				<img src="/logo.svg" alt="Zara" width="74" height="31" class="h-6 w-auto" />
+				<span class="text-line text-2xl leading-none">/</span>
+				<span class="font-mono text-xs tracking-[0.35em] text-muted uppercase">Boost</span>
+			</a>
+			<a
+				href="/"
+				class="border-line rounded-full border px-4 py-2 font-mono text-xs tracking-[0.16em] text-muted uppercase transition hover:bg-surface-2 hover:text-paper"
+			>
+				Back
+			</a>
+		</header>
+
+		<main class="mx-auto max-w-6xl px-6 pb-24">
+			<section class="border-line border-y py-14 sm:py-20">
+				<p class="font-mono text-xs tracking-[0.24em] text-muted uppercase">Exercise 07</p>
+				<h1 class="font-pixel mt-5 text-4xl leading-none text-paper sm:text-6xl">
+					Local<br />Prompt API Chat
+				</h1>
+				<p class="mt-6 max-w-2xl font-mono text-sm leading-relaxed text-muted sm:text-base">
+					This page talks to <span class="text-paper">src/exercise/07-prompt-api-local.ts</span>.
+					It is the same Zara chatbot as exercise 02, but it runs 100% on-device with
+					Chrome's built-in <span class="text-paper">Prompt API</span> (Gemini Nano):
+					no server, no API key, no network call.
+				</p>
+				<div class="mt-8 flex flex-wrap gap-3">
+					<span class="rounded-full border border-line bg-surface px-4 py-2 font-mono text-xs text-muted">
+						On-device · Gemini Nano
+					</span>
+					<span class="rounded-full border border-line bg-surface px-4 py-2 font-mono text-xs text-muted">
+						Chrome only
+					</span>
+				</div>
+			</section>
+
+			<!-- SUPPORT BANNER -->
+			<section
+				id="support-banner"
+				class="mt-10 rounded-2xl border border-line bg-ink p-6 font-mono text-sm text-muted"
+			>
+				Checking Chrome + Prompt API support...
+			</section>
+
+			<section
+				class="mt-10 grid gap-px overflow-hidden border border-line bg-line lg:grid-cols-[0.8fr_1.2fr]"
+			>
+				<article class="bg-surface p-6 sm:p-8">
+					<p class="font-mono text-xs tracking-[0.24em] text-muted uppercase">Challenge</p>
+					<h2 class="mt-4 font-mono text-xl font-medium text-paper">
+						Use the on-device Prompt API
+					</h2>
+					<p class="mt-4 font-mono text-sm leading-relaxed text-muted">
+						Open <span class="text-paper">src/exercise/07-prompt-api-local.ts</span> and
+						complete <span class="text-paper">getLocalZaraResponse</span>. Your only job is
+						to create a session with <span class="text-paper">LanguageModel.create()</span>
+						and call <span class="text-paper">await session.prompt(lastUserMessage)</span>.
+					</p>
+
+					<div class="mt-6 border border-line bg-ink p-5">
+						<p class="font-mono text-xs tracking-[0.2em] text-muted uppercase">Steps</p>
+						<ul class="mt-4 space-y-3 font-mono text-sm text-muted">
+							<li class="flex gap-3">
+								<span class="text-paper">→</span> Detection of Chrome + Prompt API is done
+							</li>
+							<li class="flex gap-3">
+								<span class="text-paper">→</span> Create the LanguageModel session
+							</li>
+							<li class="flex gap-3">
+								<span class="text-paper">→</span> Return await session.prompt(...)
+							</li>
+						</ul>
+					</div>
+
+					<a
+						href={docsUrl}
+						target="_blank"
+						rel="noreferrer"
+						class="mt-6 inline-flex rounded-full border border-line px-5 py-3 font-mono text-sm text-paper transition hover:bg-ink"
+					>
+						Read the Prompt API docs &rarr;
+					</a>
+				</article>
+
+				<section class="bg-surface p-6 sm:p-8">
+					<div class="flex flex-wrap items-start justify-between gap-4">
+						<div>
+							<p class="font-mono text-xs tracking-[0.24em] text-muted uppercase">
+								Zara Assist · Local
+							</p>
+							<h2 class="mt-2 font-mono text-xl font-medium text-paper">Customer chat</h2>
+						</div>
+						<div
+							id="response-mode"
+							class="rounded-full border border-line bg-ink px-4 py-2 font-mono text-xs text-muted"
+						>
+							Waiting for support
+						</div>
+					</div>
+
+					<div
+						id="chat-log"
+						class="mt-6 flex max-h-[520px] min-h-[360px] flex-col gap-4 overflow-y-auto border border-line bg-ink p-4"
+					>
+						<article class="max-w-[86%] border border-line bg-surface p-4">
+							<p class="font-mono text-[11px] tracking-[0.18em] text-muted uppercase">Zara Assist</p>
+							<p class="mt-2 font-mono text-sm leading-relaxed text-paper">
+								Hola. Puedo ayudarte a encontrar una prenda, combinar un look o ajustar una
+								recomendación a una ocasión concreta. Y todo sin salir de tu navegador.
+							</p>
+						</article>
+					</div>
+
+					<div class="mt-5 flex flex-wrap gap-2">
+						{
+							suggestedQuestions.map((question) => (
+								<button
+									type="button"
+									data-question={question}
+									class="rounded-full border border-line px-3 py-2 font-mono text-xs text-muted transition hover:bg-ink hover:text-paper"
+								>
+									{question}
+								</button>
+							))
+						}
+					</div>
+
+					<form id="chat-form" class="mt-5 flex flex-col gap-3 sm:flex-row">
+						<label class="sr-only" for="chat-input">Message</label>
+						<input
+							id="chat-input"
+							name="message"
+							type="text"
+							autocomplete="off"
+							placeholder="Ask Zara Assist..."
+							class="min-w-0 flex-1 rounded-full border border-line bg-ink px-5 py-3 font-mono text-sm text-paper outline-none transition placeholder:text-muted focus:border-paper"
+						/>
+						<button
+							id="send-message"
+							type="submit"
+							class="bg-paper rounded-full px-6 py-3 font-mono text-sm font-medium text-ink transition hover:opacity-80 disabled:cursor-not-allowed disabled:opacity-50"
+						>
+							Send
+						</button>
+					</form>
+				</section>
+			</section>
+		</main>
+
+		<ExerciseNav prev={{ href: "/exercise/06", label: "Zara Products MCP" }} />
+	</div>
+
+	<script>
+		import {
+			detectPromptApiSupport,
+			getLocalZaraResponse,
+			type ZaraChatMessage,
+		} from "../../exercise/07-prompt-api-local";
+
+		const form = document.querySelector<HTMLFormElement>("#chat-form");
+		const input = document.querySelector<HTMLInputElement>("#chat-input");
+		const button = document.querySelector<HTMLButtonElement>("#send-message");
+		const chatLog = document.querySelector<HTMLElement>("#chat-log");
+		const responseMode = document.querySelector<HTMLElement>("#response-mode");
+		const supportBanner = document.querySelector<HTMLElement>("#support-banner");
+		const questionButtons = document.querySelectorAll<HTMLButtonElement>("[data-question]");
+		const messages: ZaraChatMessage[] = [];
+
+		let promptApiReady = false;
+
+		const setMode = (label: string, tone: "idle" | "complete" | "stream" | "error" = "idle") => {
+			if (!responseMode) return;
+
+			const tones = {
+				idle: "border-line text-muted",
+				complete: "border-sky-300/40 text-sky-200",
+				stream: "border-green-300/50 text-green-200",
+				error: "border-red-300/50 text-red-200",
+			};
+
+			responseMode.className = `rounded-full border bg-ink px-4 py-2 font-mono text-xs ${tones[tone]}`;
+			responseMode.textContent = label;
+		};
+
+		const setBanner = (
+			message: string,
+			tone: "idle" | "ok" | "warn" | "error" = "idle",
+		) => {
+			if (!supportBanner) return;
+
+			const tones = {
+				idle: "border-line text-muted",
+				ok: "border-green-300/50 text-green-200",
+				warn: "border-amber-300/50 text-amber-200",
+				error: "border-red-300/50 text-red-200",
+			};
+
+			supportBanner.className = `mt-10 rounded-2xl border bg-ink p-6 font-mono text-sm ${tones[tone]}`;
+			supportBanner.textContent = message;
+		};
+
+		const setFormEnabled = (enabled: boolean) => {
+			if (input) input.disabled = !enabled;
+			if (button) button.disabled = !enabled;
+			questionButtons.forEach((node) => {
+				node.disabled = !enabled;
+			});
+		};
+
+		const formatDuration = (milliseconds: number) => {
+			if (milliseconds < 1000) {
+				return `${Math.round(milliseconds)}ms`;
+			}
+
+			return `${(milliseconds / 1000).toFixed(2)}s`;
+		};
+
+		const appendMessage = (role: ZaraChatMessage["role"], content: string) => {
+			if (!chatLog) {
+				throw new Error("Chat log is not available.");
+			}
+
+			const article = document.createElement("article");
+			const isUser = role === "user";
+			article.className = isUser
+				? "ml-auto max-w-[86%] border border-line bg-paper p-4 text-ink"
+				: "max-w-[86%] border border-line bg-surface p-4 text-paper";
+
+			const label = document.createElement("p");
+			label.className = isUser
+				? "font-mono text-[11px] tracking-[0.18em] text-ink/60 uppercase"
+				: "font-mono text-[11px] tracking-[0.18em] text-muted uppercase";
+			label.textContent = isUser ? "Customer" : "Zara Assist";
+
+			const text = document.createElement("p");
+			text.className = "mt-2 whitespace-pre-wrap font-mono text-sm leading-relaxed";
+			text.dataset.content = "true";
+			text.textContent = content;
+
+			article.append(label, text);
+			chatLog.append(article);
+			chatLog.scrollTop = chatLog.scrollHeight;
+
+			return text;
+		};
+
+		const updateAssistantMessage = (node: HTMLElement, content: string) => {
+			node.textContent = content;
+
+			if (chatLog) {
+				chatLog.scrollTop = chatLog.scrollHeight;
+			}
+		};
+
+		const sendMessage = async (content: string) => {
+			if (!input || !button || !promptApiReady) return;
+
+			appendMessage("user", content);
+			messages.push({ role: "user", content });
+
+			const assistantNode = appendMessage("assistant", "");
+			assistantNode.classList.add("chat-typing-cursor");
+			setFormEnabled(false);
+			setMode("Running on-device...", "idle");
+
+			try {
+				const startedAt = performance.now();
+				const answer = await getLocalZaraResponse(messages, (event) => {
+					const percent = Math.round(event.loaded * 100);
+					setMode(`Downloading model... ${percent}%`, "idle");
+				});
+
+				if (!answer) {
+					throw new Error("The on-device model did not return any content.");
+				}
+
+				const elapsedMs = performance.now() - startedAt;
+				updateAssistantMessage(assistantNode, answer);
+				messages.push({ role: "assistant", content: answer });
+				setMode(`On-device answer · ${formatDuration(elapsedMs)}`, "stream");
+			} catch (error) {
+				const message = error instanceof Error ? error.message : "Unknown error";
+				updateAssistantMessage(assistantNode, `Exercise failed: ${message}`);
+				setMode("Exercise failed", "error");
+			} finally {
+				assistantNode.classList.remove("chat-typing-cursor");
+				setFormEnabled(true);
+				input.focus();
+			}
+		};
+
+		const initSupport = async () => {
+			setFormEnabled(false);
+
+			try {
+				const support = await detectPromptApiSupport();
+
+				if (!support.supported) {
+					setBanner(support.reason, "error");
+					setMode("Prompt API unavailable", "error");
+					return;
+				}
+
+				promptApiReady = true;
+				setFormEnabled(true);
+
+				if (support.needsDownload) {
+					setBanner(
+						"Chrome + Prompt API detected. Gemini Nano will download on your first message (one time, browser-wide).",
+						"warn",
+					);
+					setMode("Ready · model will download", "idle");
+				} else {
+					setBanner(
+						"Chrome + Prompt API ready. Everything runs on-device, no network call.",
+						"ok",
+					);
+					setMode("Ready · on-device", "idle");
+				}
+			} catch (error) {
+				const message = error instanceof Error ? error.message : "Unknown error";
+				setBanner(`Could not check Prompt API support: ${message}`, "error");
+				setMode("Prompt API unavailable", "error");
+			}
+		};
+
+		form?.addEventListener("submit", (event) => {
+			event.preventDefault();
+
+			if (!input) return;
+
+			const content = input.value.trim();
+
+			if (!content) return;
+
+			input.value = "";
+			void sendMessage(content);
+		});
+
+		questionButtons.forEach((questionButton) => {
+			questionButton.addEventListener("click", () => {
+				const question = questionButton.dataset.question;
+
+				if (!question || !input || !form) return;
+
+				input.value = question;
+				form.requestSubmit();
+			});
+		});
+
+		void initSupport();
+	</script>
+</Layout>
