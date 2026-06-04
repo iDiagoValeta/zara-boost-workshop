@@ -17,6 +17,9 @@ pnpm-debug.log*
 .env
 .env.production
 
+# exercise solutions
+src/exercise/*.solution.ts
+
 # macOS-specific files
 .DS_Store
 
