@@ -1,46 +1,107 @@
-# Astro Starter Kit: Basics
+# Zara Boost · AI for Developers Workshop
+
+A 2-hour hands-on workshop by **midudev**: from prompts to agents.
+
+We build a real AI workflow for a fashion ecommerce frontend team — installing and
+creating **Skills**, a custom **command**, a tiny **MCP server**, and running AI
+**locally in the browser** with the Prompt API and WebGPU.
+
+> This repository contains the presentation site and the exercises we build live.
+
+## Requirements
+
+You need two things installed on your machine.
+
+### 1. Node.js (v22.12 or higher)
+
+Download and install the LTS version from [nodejs.org](https://nodejs.org).
+
+Check it works:
 
 ```sh
-pnpm create astro@latest -- --template basics
+node --version
+# v22.12.0 or higher
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+### 2. pnpm
 
-## 🚀 Project Structure
+This project uses **pnpm** as its package manager (do not use `npm` or `yarn` to
+install dependencies). Once Node.js is installed, install pnpm globally:
 
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
-/
-├── public/
-│   └── favicon.svg
-├── src
-│   ├── assets
-│   │   └── astro.svg
-│   ├── components
-│   │   └── Welcome.astro
-│   ├── layouts
-│   │   └── Layout.astro
-│   └── pages
-│       └── index.astro
-└── package.json
+```sh
+npm install -g pnpm@latest-11
 ```
 
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
+Check it works:
 
-## 🧞 Commands
+```sh
+pnpm --version
+```
 
-All commands are run from the root of the project, from a terminal:
+## Get the project
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `pnpm install`             | Installs dependencies                            |
-| `pnpm dev`             | Starts local dev server at `localhost:4321`      |
-| `pnpm build`           | Build your production site to `./dist/`          |
-| `pnpm preview`         | Preview your build locally, before deploying     |
-| `pnpm astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `pnpm astro -- --help` | Get help using the Astro CLI                     |
+You have two options.
 
-## 👀 Want to learn more?
+### Option A — Clone with Git (recommended)
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+```sh
+git clone https://github.com/midudev/zara-boost-workshop.git
+cd zara-boost-workshop
+```
+
+### Option B — Download without Git
+
+If you don't have Git installed, you can download the project as a ZIP:
+
+1. Go to the repository: `https://github.com/midudev/zara-boost-workshop`
+2. Click the green **Code** button → **Download ZIP**.
+3. Unzip it and open the folder in your terminal:
+
+```sh
+cd zara-boost-workshop
+```
+
+## Run it
+
+From the root of the project:
+
+```sh
+pnpm install
+pnpm dev
+```
+
+Then open [http://localhost:4321](http://localhost:4321).
+
+## Exercise 01 — OpenAI
+
+The first exercise is in `src/exercise/01-our-first-query.ts`.
+
+You will create an [OpenAI](https://platform.openai.com) account, generate an API
+key, and complete the TODOs in the file to translate/adapt product copy for
+`en`, `es` and `fr`.
+
+Before running the exercise, paste your API key into the `OPENAI_API_KEY`
+constant in `src/exercise/01-our-first-query.ts`:
+
+```ts
+const OPENAI_API_KEY = "your-key-here";
+```
+
+Do not commit API keys or `.env` files.
+
+## Commands
+
+All commands are run from the root of the project:
+
+| Command         | Action                                       |
+| :-------------- | :------------------------------------------- |
+| `pnpm install`  | Install dependencies                         |
+| `pnpm dev`      | Start the dev server at `localhost:4321`     |
+| `pnpm build`    | Build the production site to `./dist/`        |
+| `pnpm preview`  | Preview the production build locally          |
+
+## Tech stack
+
+- [Astro](https://astro.build) — site framework
+- [Tailwind CSS v4](https://tailwindcss.com) — styling
+- [Geist](https://vercel.com/font) — Geist Pixel & Geist Mono typefaces
