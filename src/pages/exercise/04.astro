@@ -1,0 +1,276 @@
+---
+import badgeCheckIcon from "../../assets/badge-check.svg";
+import errorIcon from "../../assets/octagon-times-solid.svg";
+import ExerciseNav from "../../components/ExerciseNav.astro";
+import { getDisplaySummary } from "../../exercise/04-coding-guidelines";
+import Layout from "../../layouts/Layout.astro";
+
+const badgeCheckIconSrc =
+	typeof badgeCheckIcon === "string" ? badgeCheckIcon : badgeCheckIcon.src;
+const errorIconSrc = typeof errorIcon === "string" ? errorIcon : errorIcon.src;
+const summary = getDisplaySummary();
+---
+
+<Layout
+	title="Exercise 04 · AGENTS.md Coding Guidelines"
+	description="Use AGENTS.md to teach the agent project coding style and validate the generated source."
+>
+	<div class="relative min-h-screen overflow-hidden">
+		<div
+			class="pointer-events-none absolute inset-0 -z-10 opacity-[0.04]"
+			style="background-image:linear-gradient(var(--color-line) 1px,transparent 1px),linear-gradient(90deg,var(--color-line) 1px,transparent 1px);background-size:64px 64px;"
+		>
+		</div>
+
+		<header class="mx-auto flex max-w-6xl items-center justify-between px-6 py-6">
+			<a href="/" class="flex items-center gap-3">
+				<img src="/logo.svg" alt="Zara" width="74" height="31" class="h-6 w-auto" />
+				<span class="text-line text-2xl leading-none">/</span>
+				<span class="font-mono text-xs tracking-[0.35em] text-muted uppercase">Boost</span>
+			</a>
+			<a
+				href="/"
+				class="border-line rounded-full border px-4 py-2 font-mono text-xs tracking-[0.16em] text-muted uppercase transition hover:bg-surface-2 hover:text-paper"
+			>
+				Back
+			</a>
+		</header>
+
+		<main class="mx-auto max-w-6xl px-6 pb-24">
+			<section class="border-line border-y py-14 sm:py-20">
+				<p class="font-mono text-xs tracking-[0.24em] text-muted uppercase">Exercise 04</p>
+				<h1 class="font-pixel mt-5 text-4xl leading-none text-paper sm:text-6xl">
+					AGENTS.md<br />Coding Rules
+				</h1>
+				<p class="mt-6 max-w-2xl font-mono text-sm leading-relaxed text-muted sm:text-base">
+					This exercise uses <span class="text-paper">AGENTS.md</span> to teach the agent a
+					project-specific coding style, then asks it to rebuild
+					<span class="text-paper">src/exercise/04-coding-guidelines.ts</span> without breaking
+					the page.
+				</p>
+			</section>
+
+			<section
+				class="mt-10 grid gap-px overflow-hidden rounded-2xl border border-line bg-line lg:grid-cols-[0.9fr_1.1fr]"
+			>
+				<article class="bg-surface p-6 sm:p-8">
+					<p class="font-mono text-xs tracking-[0.24em] text-muted uppercase">Challenge</p>
+					<h2 class="mt-4 font-mono text-xl font-medium text-paper">
+						Teach the agent how this codebase should name things
+					</h2>
+					<p class="mt-4 font-mono text-sm leading-relaxed text-muted">
+						First, add a coding style section to <span class="text-paper">AGENTS.md</span>.
+						Describe the rule in your own words: identifiers should be written in English,
+						Spanish words should not appear in code identifiers, and brand references should
+						stay in visible copy, prompts or content instead of variable names.
+					</p>
+
+					<div class="mt-6 rounded-2xl border border-line bg-ink p-5">
+						<p class="font-mono text-xs tracking-[0.2em] text-muted uppercase">Then ask the agent</p>
+						<p class="mt-4 font-mono text-sm leading-relaxed text-muted">
+							Recreate <span class="text-paper">src/exercise/04-coding-guidelines.ts</span>
+							using the project rules from <span class="text-paper">AGENTS.md</span>. The exported
+							types and functions must keep working so this page can still render the product
+							summary.
+						</p>
+					</div>
+
+					<div class="mt-6 rounded-2xl border border-line bg-ink p-5">
+						<p class="font-mono text-xs tracking-[0.2em] text-muted uppercase">Check validates</p>
+						<ul class="mt-4 space-y-3 font-mono text-sm text-muted">
+							<li class="flex gap-3">
+								<span class="text-paper">→</span> No brand name inside the exercise source code
+							</li>
+							<li class="flex gap-3">
+								<span class="text-paper">→</span> No known Spanish identifiers from the starter file
+							</li>
+							<li class="flex gap-3">
+								<span class="text-paper">→</span> The exported API still returns a valid summary
+							</li>
+						</ul>
+					</div>
+				</article>
+
+				<section class="bg-surface p-6 sm:p-8">
+					<div class="flex flex-wrap items-start justify-between gap-4">
+						<div>
+							<p class="font-mono text-xs tracking-[0.24em] text-muted uppercase">
+								Rendered output
+							</p>
+							<h2 class="mt-2 font-mono text-xl font-medium text-paper">{summary.title}</h2>
+						</div>
+						<button
+							id="run-check"
+							class="bg-paper rounded-full px-5 py-3 font-mono text-sm font-medium text-ink transition hover:opacity-80"
+						>
+							Run check
+						</button>
+					</div>
+
+					<p class="mt-4 font-mono text-sm leading-relaxed text-muted">{summary.description}</p>
+
+					<article class="mt-6 rounded-2xl border border-line bg-ink p-5">
+						<div class="flex items-start justify-between gap-4">
+							<div>
+								<p class="font-mono text-xs tracking-[0.18em] text-muted uppercase">
+									{summary.product.category}
+								</p>
+								<h3 class="mt-2 font-mono text-xl font-medium text-paper">
+									{summary.product.name}
+								</h3>
+							</div>
+							<p class="font-pixel text-2xl text-paper">{summary.product.formattedPrice}</p>
+						</div>
+
+						<div class="mt-5 flex flex-wrap gap-2">
+							{
+								summary.pills.map((pill) => (
+									<span class="rounded-full border border-line px-3 py-1 font-mono text-xs text-muted">
+										{pill}
+									</span>
+								))
+							}
+						</div>
+
+						<p class="mt-5 font-mono text-xs text-muted">{summary.product.savingsLabel}</p>
+					</article>
+
+					<div
+						id="status"
+						data-error-icon={errorIconSrc}
+						data-success-icon={badgeCheckIconSrc}
+						class="mt-6 rounded-2xl border border-line bg-ink p-5 font-mono text-sm text-muted"
+					>
+						Ready. Click <span class="text-paper">Run check</span> to inspect the exercise source.
+					</div>
+
+					<div id="violations" class="mt-5 grid gap-3"></div>
+				</section>
+			</section>
+		</main>
+
+		<ExerciseNav
+			prev={{ href: "/exercise/03", label: "Virtual Try-On" }}
+			next={{ href: "/exercise/05", label: "Agent Skills Performance" }}
+		/>
+	</div>
+
+	<script>
+		type CheckViolation = {
+			label: string;
+			message: string;
+		};
+
+		type CheckResponse = {
+			passed?: boolean;
+			file?: string;
+			violations?: CheckViolation[];
+			error?: string;
+		};
+
+		const button = document.querySelector<HTMLButtonElement>("#run-check");
+		const status = document.querySelector<HTMLElement>("#status");
+		const violationsList = document.querySelector<HTMLElement>("#violations");
+
+		const createStatusIcon = (src: string) => {
+			const img = document.createElement("img");
+			img.src = src;
+			img.alt = "";
+			img.setAttribute("aria-hidden", "true");
+
+			return img;
+		};
+
+		const setIconStatus = (message: string, className: string, iconSrc: string) => {
+			if (!status) return;
+			const text = document.createElement("span");
+			text.textContent = message;
+
+			status.className = className;
+			status.replaceChildren(createStatusIcon(iconSrc), text);
+		};
+
+		const setStatus = (message: string, type: "idle" | "success" | "error" = "idle") => {
+			if (!status) return;
+			const baseClass = "mt-6 rounded-2xl border bg-ink p-5 font-mono text-sm";
+
+			if (type === "success") {
+				setIconStatus(
+					message,
+					`${baseClass} exercise-status-success flex items-start gap-3`,
+					status.dataset.successIcon ?? "",
+				);
+				return;
+			}
+
+			if (type === "error") {
+				setIconStatus(
+					message,
+					`${baseClass} exercise-status-error flex items-start gap-3`,
+					status.dataset.errorIcon ?? "",
+				);
+				return;
+			}
+
+			status.className = `${baseClass} border-line text-muted`;
+			status.textContent = message;
+		};
+
+		const renderViolations = (violations: CheckViolation[]) => {
+			if (!violationsList) return;
+			violationsList.replaceChildren();
+
+			for (const violation of violations) {
+				const item = document.createElement("article");
+				item.className = "rounded-2xl border border-line bg-ink p-4 font-mono text-sm";
+
+				const label = document.createElement("p");
+				label.className = "text-paper";
+				label.textContent = violation.label;
+
+				const message = document.createElement("p");
+				message.className = "mt-2 text-muted";
+				message.textContent = violation.message;
+
+				item.append(label, message);
+				violationsList.append(item);
+			}
+		};
+
+		button?.addEventListener("click", async () => {
+			if (!button) return;
+
+			button.disabled = true;
+			button.textContent = "Checking...";
+			violationsList?.replaceChildren();
+			setStatus("Inspecting source code and validating the exported summary...");
+
+			try {
+				const response = await fetch("/api/exercise/04", { method: "POST" });
+				const payload = (await response.json()) as CheckResponse;
+
+				if (!response.ok) {
+					throw new Error(payload.error ?? "The server request failed.");
+				}
+
+				if (!payload.passed) {
+					const violations = payload.violations ?? [];
+					renderViolations(violations);
+					setStatus(
+						`Exercise failed: ${violations.length} coding style issue${violations.length === 1 ? "" : "s"} found.`,
+						"error",
+					);
+					return;
+				}
+
+				setStatus("Exercise looks good. The source follows AGENTS.md and the page still works.", "success");
+			} catch (error) {
+				const message = error instanceof Error ? error.message : "Unknown error";
+				setStatus(`Exercise failed: ${message}`, "error");
+			} finally {
+				button.disabled = false;
+				button.textContent = "Run check";
+			}
+		});
+	</script>
+</Layout>
