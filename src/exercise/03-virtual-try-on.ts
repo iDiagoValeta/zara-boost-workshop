@@ -68,8 +68,8 @@ export const generateVirtualTryOn = async ({ personImage, notes = "" }: TryOnInp
   // - Use customer notes only as fit/styling context.
   const prompt = [
     "Virtual try-on edit.",
-    "The first image is the person; the second image is the Zara garment reference.",
-    "Dress the person in the garment from the second image. Keep the whole outfit consistent with the garment's color, material and fit, and make it look natural on the person.",
+    `The first image is the person; the second image is the ${garment.name} (${garment.material}, ${garment.category}) reference.`,
+    `Dress the person in the ${garment.name} from the second image. Keep the whole outfit consistent with the garment's color, material and fit, and make it look natural on the person.`,
     "Keep the person's identity, face, pose, body shape and the original background unchanged.",
     "Replace only the relevant upper-body garment, matching the garment's color, material and fit naturally to the body and lighting.",
     notes ? `Use these customer notes only as fit/styling context: ${notes}` : "",

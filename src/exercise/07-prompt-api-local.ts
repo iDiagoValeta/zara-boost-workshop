@@ -25,14 +25,34 @@ export const suggestedQuestions = [
   "Recomiéndame una prenda ligera para una cena informal.",
 ];
 
-export const systemPrompt = [
-  "You are Zara Assist, a concise shopping assistant for a fashion ecommerce store.",
-  "Answer in the same language as the customer.",
-  "Ask one short follow-up question when sizing, climate, budget or occasion is unclear.",
-  "Recommend versatile garments and explain the styling logic in practical terms.",
-  "Do not invent stock, delivery times, discounts or store policies.",
-  "Keep replies under 90 words.",
-].join(" ");
+export const assistantConfig = {
+  name: "Zara Assist",
+  store: "Zara",
+  maxWords: 90,
+};
+
+// Build the system prompt from dynamic variables so the assistant's identity,
+// length limit and current date are injected when the session is created.
+const buildSystemPrompt = ({
+  name,
+  store,
+  maxWords,
+  today,
+}: {
+  name: string;
+  store: string;
+  maxWords: number;
+  today: string;
+}) =>
+  [
+    `You are ${name}, a concise shopping assistant for the ${store} fashion ecommerce store.`,
+    "Answer in the same language as the customer.",
+    "Ask one short follow-up question when sizing, climate, budget or occasion is unclear.",
+    "Recommend versatile garments and explain the styling logic in practical terms.",
+    `Today is ${today}; use it for seasonal suggestions when relevant.`,
+    "Do not invent stock, delivery times, discounts or store policies.",
+    `Keep replies under ${maxWords} words.`,
+  ].join(" ");
 
 // --- Prompt API types -------------------------------------------------------
 // Chrome ships these as global objects. We declare a minimal subset so the
@@ -185,6 +205,11 @@ export const getLocalZaraResponse = async (
 
   const lastUserMessage = messages.at(-1)?.content ?? "";
   const history = messages.slice(0, -1);
+
+  const systemPrompt = buildSystemPrompt({
+    ...assistantConfig,
+    today: new Date().toISOString().slice(0, 10),
+  });
 
   // TODO 1:
   // Create an on-device session with LanguageModel.create(). Pass the system

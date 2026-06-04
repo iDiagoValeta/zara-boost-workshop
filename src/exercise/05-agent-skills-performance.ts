@@ -75,19 +75,41 @@ export const installOptions: SkillInstallOption[] = [
   },
 ];
 
-export const agentPrompt = `Usa la skill de performance de addyosmani/web-quality-skills para auditar y optimizar el ejercicio 05.
+const agentTask = {
+  exerciseId: "05",
+  skill: "addyosmani/web-quality-skills",
+  files: [
+    "src/pages/exercise/05.astro",
+    "src/exercise/05-agent-skills-performance.ts",
+  ],
+};
+
+// Build the agent prompt from dynamic variables (exercise id, skill, files) so
+// the same template can drive any exercise. It stays a plain string because the
+// test page renders it directly in a code block.
+const buildAgentPrompt = ({
+  exerciseId,
+  skill,
+  files,
+}: {
+  exerciseId: string;
+  skill: string;
+  files: string[];
+}) =>
+  `Usa la skill de performance de ${skill} para auditar y optimizar el ejercicio ${exerciseId}.
 
 Objetivo:
-- Mejorar Lighthouse Performance de /exercise/05 de forma clara.
+- Mejorar Lighthouse Performance de /exercise/${exerciseId} de forma clara.
 - Mantener el contenido y la estética de la página.
 - Optimizar imágenes, trabajo de JavaScript, layout shifts y DOM innecesario.
 - No tocar README.md.
 
 Archivos principales:
-- src/pages/exercise/05.astro
-- src/exercise/05-agent-skills-performance.ts
+${files.map((file) => `- ${file}`).join("\n")}
 
 Cuando termines, explícame qué cambió y qué debería mejorar en Lighthouse.`;
+
+export const agentPrompt = buildAgentPrompt(agentTask);
 
 export const optimizationHints = [
   "Reduce oversized remote images and set explicit width and height.",

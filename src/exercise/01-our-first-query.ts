@@ -40,38 +40,57 @@ export const product: Product = {
 
 export const targetLocales: LocalizedProductCopy["locale"][] = ["en", "es", "fr"];
 
-export const getAssistantMessage = async () => {
-  // TODO 1:
-  // Write a system prompt that explains the role and output format.
-  // Requirements:
+export const brand = "Zara";
 
-  // - No exaggerated claims.
-  // - Return only JSON with this shape:
-  //   { "copies": [{ "locale": "en", "title": "...", "shortDescription": "...", "tags": ["..."] }] }
-  const systemPrompt = [
-    "You are a fashion ecommerce copywriter for Zara.",
-    "You translate and adapt product copy for the requested locales.",
+type CopyConstraints = {
+  titleMaxWords: number;
+  descriptionMaxWords: number;
+  tagCount: number;
+};
+
+// Build the system prompt from dynamic variables (brand, locales, constraints)
+// so the same template adapts to any catalog, market or formatting rule.
+const buildSystemPrompt = ({
+  brand,
+  locales,
+  constraints,
+}: {
+  brand: string;
+  locales: LocalizedProductCopy["locale"][];
+  constraints: CopyConstraints;
+}) =>
+  [
+    `You are a fashion ecommerce copywriter for ${brand}.`,
+    `You translate and adapt product copy for these locales: ${locales.join(", ")}.`,
     "Keep the tone factual: no exaggerated or unverifiable claims.",
-    "Respect every constraint in the user payload (max words and tag count).",
+    `Respect every constraint: titles up to ${constraints.titleMaxWords} words, descriptions up to ${constraints.descriptionMaxWords} words, and exactly ${constraints.tagCount} tags.`,
     "Return ONLY valid JSON, with no markdown or code fences, using this exact shape:",
     '{ "copies": [{ "locale": "en", "title": "...", "shortDescription": "...", "tags": ["..."] }] }',
     "Include one entry per requested locale.",
   ].join(" ");
 
-  // TODO 2:
+export const getAssistantMessage = async () => {
+  // TODO 2 (defined first so the prompt and the payload share the same values):
+  // Constraints for the copy.
+  const constraints: CopyConstraints = {
+    titleMaxWords: 6,
+    descriptionMaxWords: 24,
+    tagCount: 4,
+  };
+
+  // TODO 1:
+  // Build the system prompt with dynamic variables instead of a fixed string.
+  const systemPrompt = buildSystemPrompt({
+    brand,
+    locales: targetLocales,
+    constraints,
+  });
+
   // Create the user payload with the product, targetLocales and constraints.
-  // Suggested constraints:
-  // - titleMaxWords: 6
-  // - descriptionMaxWords: 24
-  // - tagCount: 4
   const userPayload = {
     product,
     targetLocales,
-    constraints: {
-      titleMaxWords: 6,
-      descriptionMaxWords: 24,
-      tagCount: 4,
-    },
+    constraints,
   };
 
   const OPENAI_API_KEY = import.meta.env.OPENAI_API_KEY;
