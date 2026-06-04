@@ -19,6 +19,7 @@ pnpm-debug.log*
 
 # exercise solutions
 src/exercise/*.solution.ts
+src/mcp/*.solution.ts
 
 # macOS-specific files
 .DS_Store

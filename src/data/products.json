@@ -89,5 +89,70 @@
     "sourceUrl": "https://www.zara.com/es/es/camiseta-slim-fit-basica--01-p05584401.html?v1=495669923",
     "color": "Blanco",
     "reference": "5584/401"
+  },
+  {
+    "id": "548714046",
+    "slug": "vestido-cuadros-created-by-caramel-london-x-zara",
+    "name": "VESTIDO CUADROS CREATED BY CARAMEL LONDON X ZARA",
+    "category": "Women / Dresses",
+    "material": "87% viscosa, 13% algodon",
+    "price": "79.95 EUR",
+    "image": "https://static.zara.net/assets/public/2049/850e/f4814d1d832a/ac5f1e5771b2/00251784400-p/00251784400-p.jpg?ts=1779966940656",
+    "sourceDescription": "ZARA WOMAN COLLECTION Vestido midi confeccionado en hilatura con mezcla de viscosa. Escote pico y manga larga. Bolsillos de plastron en delantero. Cinturon en mismo tejido ajustable con lazadas. Detalle de vivo a contraste. Bajo recto con aberturas laterales. Coleccion especial Created by Caramel London x Zara.",
+    "sourceUrl": "https://www.zara.com/es/es/vestido-cuadros-created-by-caramel-london-x-zara-p00251784.html?v1=548714046",
+    "color": "Azul",
+    "reference": "0251/784"
+  },
+  {
+    "id": "548706237",
+    "slug": "vestido-lino-100-created-by-caramel-london-x-zara",
+    "name": "VESTIDO LINO 100% CREATED BY CARAMEL LONDON X ZARA",
+    "category": "Women / Dresses",
+    "material": "100% lino",
+    "price": "69.95 EUR",
+    "image": "https://static.zara.net/assets/public/b7e2/5ce1/7cc944938ac0/6b09a1649bd4/02515909717-p/02515909717-p.jpg?ts=1779966940265",
+    "sourceDescription": "ZARA WOMAN COLLECTION Vestido midi oversize con tejido principal confeccionado en hilatura de lino. Cuello redondo y manga larga abullonada acabada en elastico. Bajo recto. Cierre frontal con botones. Coleccion especial Created by Caramel London x Zara.",
+    "sourceUrl": "https://www.zara.com/es/es/vestido-lino-100-created-by-caramel-london-x-zara-p02515909.html?v1=548706237",
+    "color": "Chocolate",
+    "reference": "2515/909"
+  },
+  {
+    "id": "548714053",
+    "slug": "vestido-rayas-created-by-caramel-london-x-zara",
+    "name": "VESTIDO RAYAS CREATED BY CARAMEL LONDON X ZARA",
+    "category": "Women / Dresses",
+    "material": "100% algodon",
+    "price": "59.95 EUR",
+    "image": "https://static.zara.net/assets/public/0895/e67f/5ac0464aa538/65e6d597f2de/02516149104-p/02516149104-p.jpg?ts=1779966946143",
+    "sourceDescription": "ZARA WOMAN COLLECTION Vestido con tejido principal confeccionado en hilatura de algodon. Cuello bobo y escote pico ajustable con lazadas. Manga larga abullonada acabada en elastico. Cinturon en mismo tejido. Bajo acabado en linea evase. Cierre frontal con botones. Coleccion especial Created by Caramel London x Zara.",
+    "sourceUrl": "https://www.zara.com/es/es/vestido-rayas-created-by-caramel-london-x-zara-p02516149.html?v1=548714053",
+    "color": "rayas",
+    "reference": "2516/149"
+  },
+  {
+    "id": "548714048",
+    "slug": "vestido-seda-100-created-by-caramel-london-x-zara",
+    "name": "VESTIDO SEDA 100% CREATED BY CARAMEL LONDON X ZARA",
+    "category": "Women / Dresses",
+    "material": "100% seda (morera)",
+    "price": "89.95 EUR",
+    "image": "https://static.zara.net/assets/public/7e09/a277/5dfe4f708317/aee8b993b483/00251103020-p/00251103020-p.jpg?ts=1779966936964",
+    "sourceDescription": "ZARA WOMAN COLLECTION Vestido midi con tejido principal confeccionado en hilatura de seda. Escote redondo y tirantes finos. Detalle de estampacion floral. Bajo recto. Coleccion especial Created by Caramel London x Zara.",
+    "sourceUrl": "https://www.zara.com/es/es/vestido-seda-100-created-by-caramel-london-x-zara-p00251103.html?v1=548714048",
+    "color": "Estampado",
+    "reference": "0251/103"
+  },
+  {
+    "id": "548706236",
+    "slug": "vestido-lino-100-created-by-caramel-london-x-zara",
+    "name": "VESTIDO LINO 100% CREATED BY CARAMEL LONDON X ZARA",
+    "category": "Women / Dresses",
+    "material": "100% lino",
+    "price": "69.95 EUR",
+    "image": "https://static.zara.net/assets/public/87e5/3930/fa8c4c08a9a1/53e105d2fcd3/02515909712-p/02515909712-p.jpg?ts=1779966945564",
+    "sourceDescription": "ZARA WOMAN COLLECTION Vestido midi oversize con tejido principal confeccionado en hilatura de lino. Cuello redondo y manga larga abullonada acabada en elastico. Bajo recto. Cierre frontal con botones. Coleccion especial Created by Caramel London x Zara.",
+    "sourceUrl": "https://www.zara.com/es/es/vestido-lino-100-created-by-caramel-london-x-zara-p02515909.html?v1=548706236",
+    "color": "Crudo",
+    "reference": "2515/909"
   }
 ]

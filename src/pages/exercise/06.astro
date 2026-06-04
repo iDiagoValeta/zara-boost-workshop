@@ -1,0 +1,248 @@
+---
+import { Code } from "astro:components";
+import badgeCheckIcon from "../../assets/badge-check.svg";
+import errorIcon from "../../assets/octagon-times-solid.svg";
+import ExerciseNav from "../../components/ExerciseNav.astro";
+import {
+	cursorConfigExample,
+	cursorConfigNotes,
+	implementationSteps,
+	inspectorCommands,
+	mcpTools,
+	setupCommands,
+} from "../../exercise/06-zara-mcp";
+import Layout from "../../layouts/Layout.astro";
+
+const badgeCheckIconSrc =
+	typeof badgeCheckIcon === "string" ? badgeCheckIcon : badgeCheckIcon.src;
+const errorIconSrc = typeof errorIcon === "string" ? errorIcon : errorIcon.src;
+---
+
+<Layout
+	title="Exercise 06 · Zara Products MCP"
+	description="Create a Model Context Protocol server that exposes the local Zara products API to Cursor and other MCP clients."
+>
+	<div class="relative min-h-screen overflow-hidden">
+		<div
+			class="pointer-events-none absolute inset-0 -z-10 opacity-[0.04]"
+			style="background-image:linear-gradient(var(--color-line) 1px,transparent 1px),linear-gradient(90deg,var(--color-line) 1px,transparent 1px);background-size:64px 64px;"
+		>
+		</div>
+
+		<header class="mx-auto flex max-w-6xl items-center justify-between px-6 py-6">
+			<a href="/" class="flex items-center gap-3">
+				<img src="/logo.svg" alt="Zara" width="74" height="31" class="h-6 w-auto" />
+				<span class="text-line text-2xl leading-none">/</span>
+				<span class="font-mono text-xs tracking-[0.35em] text-muted uppercase">Boost</span>
+			</a>
+			<a
+				href="/"
+				class="border-line rounded-full border px-4 py-2 font-mono text-xs tracking-[0.16em] text-muted uppercase transition hover:bg-surface-2 hover:text-paper"
+			>
+				Back
+			</a>
+		</header>
+
+		<main class="mx-auto max-w-6xl px-6 pb-24">
+			<section class="border-line border-y py-14 sm:py-20">
+				<p class="font-mono text-xs tracking-[0.24em] text-muted uppercase">Exercise 06</p>
+				<h1 class="font-pixel mt-5 text-4xl leading-none text-paper sm:text-6xl">
+					Zara Products<br />MCP Server
+				</h1>
+				<p class="mt-6 max-w-2xl font-mono text-sm leading-relaxed text-muted sm:text-base">
+					Turn the local product API into a Model Context Protocol server. The agent
+					can already list products with <span class="text-paper">list_products</span>.
+					Your task is to complete <span class="text-paper">get_product</span> and
+					<span class="text-paper"> search_products</span>.
+				</p>
+				<div class="mt-8 flex flex-wrap gap-3">
+					<span class="rounded-full border border-line bg-surface px-4 py-2 font-mono text-xs text-muted">
+						Transport: stdio
+					</span>
+					<span class="rounded-full border border-line bg-surface px-4 py-2 font-mono text-xs text-muted">
+						1 ready · 2 TODOs
+					</span>
+				</div>
+			</section>
+
+			<section class="mt-10 grid gap-px overflow-hidden rounded-2xl border border-line bg-line lg:grid-cols-3">
+				{
+					mcpTools.map((tool) => (
+						<article class="bg-surface p-6 sm:p-8">
+							<p class="font-mono text-xs tracking-[0.24em] text-muted uppercase">Tool</p>
+							<h2 class="mt-4 font-mono text-xl font-medium text-paper">{tool.name}</h2>
+							<p class="mt-4 font-mono text-sm leading-relaxed text-muted">{tool.purpose}</p>
+							<p class="mt-5 font-mono text-xs leading-relaxed text-muted">
+								<span class="text-paper">Input:</span> {tool.input}
+							</p>
+							<p class="mt-2 font-mono text-xs leading-relaxed text-muted">
+								<span class="text-paper">Output:</span> {tool.output}
+							</p>
+						</article>
+					))
+				}
+			</section>
+
+			<section class="mt-10 grid gap-px overflow-hidden rounded-2xl border border-line bg-line lg:grid-cols-[0.9fr_1.1fr]">
+				<article class="bg-surface p-6 sm:p-8">
+					<p class="font-mono text-xs tracking-[0.24em] text-muted uppercase">Challenge</p>
+					<h2 class="mt-4 font-mono text-xl font-medium text-paper">
+						Expose the local catalog to agents
+					</h2>
+					<p class="mt-4 font-mono text-sm leading-relaxed text-muted">
+						Complete <span class="text-paper">src/mcp/zara-products.server.ts</span>. The
+						MCP server and <span class="text-paper">list_products</span> are already
+						created.
+					</p>
+
+					<ol class="mt-6 space-y-4 font-mono text-sm text-muted">
+						{
+							implementationSteps.map((step, index) => (
+								<li class="flex gap-4">
+									<span class="font-pixel text-2xl text-paper">{String(index + 1).padStart(2, "0")}</span>
+									<span>
+										<span class="block text-paper">{step.title}</span>
+										<span class="mt-1 block leading-relaxed">{step.description}</span>
+									</span>
+								</li>
+							))
+						}
+					</ol>
+
+					<button
+						id="run-check"
+						class="bg-paper mt-8 rounded-full px-5 py-3 font-mono text-sm font-medium text-ink transition hover:opacity-80"
+					>
+						Check exercise contract
+					</button>
+					<div
+						id="status"
+						data-error-icon={errorIconSrc}
+						data-success-icon={badgeCheckIconSrc}
+						class="mt-5 rounded-2xl border border-line bg-ink p-5 font-mono text-sm text-muted"
+					>
+						Ready. Test the starter with <span class="text-paper">pnpm mcp:zara:inspect</span>,
+						then compare with
+						<span class="text-paper"> pnpm mcp:zara:test</span>.
+					</div>
+				</article>
+
+				<section class="code-frame bg-ink">
+					<div class="border-line flex items-center gap-2 border-b px-6 py-4">
+						<span class="h-3 w-3 rounded-full bg-line"></span>
+						<span class="h-3 w-3 rounded-full bg-line"></span>
+						<span class="h-3 w-3 rounded-full bg-line"></span>
+						<span class="ml-2 font-mono text-xs text-muted">run + test</span>
+					</div>
+					<Code code={setupCommands} lang="shell" theme="github-dark" />
+					<div class="border-line border-y px-6 py-4">
+						<p class="font-mono text-xs tracking-[0.2em] text-muted uppercase">MCP Inspector</p>
+					</div>
+					<Code code={inspectorCommands} lang="shell" theme="github-dark" />
+				</section>
+			</section>
+
+			<section class="mt-10 grid gap-px overflow-hidden rounded-2xl border border-line bg-line lg:grid-cols-2">
+				<section class="code-frame bg-ink">
+					<div class="border-line flex items-center gap-2 border-b px-6 py-4">
+						<span class="h-3 w-3 rounded-full bg-line"></span>
+						<span class="h-3 w-3 rounded-full bg-line"></span>
+						<span class="h-3 w-3 rounded-full bg-line"></span>
+						<span class="ml-2 font-mono text-xs text-muted">cursor mcp config</span>
+					</div>
+					<Code code={cursorConfigExample} lang="json" theme="github-dark" />
+				</section>
+				<article class="bg-surface p-6 sm:p-8">
+					<p class="font-mono text-xs tracking-[0.24em] text-muted uppercase">Why this config</p>
+					<h2 class="mt-4 font-mono text-xl font-medium text-paper">
+						node + tsx instead of pnpm
+					</h2>
+					<ul class="mt-6 space-y-4 font-mono text-sm leading-relaxed text-muted">
+						{
+							cursorConfigNotes.map((note) => (
+								<li class="flex gap-3">
+									<span class="text-paper">—</span>
+									<span>{note}</span>
+								</li>
+							))
+						}
+					</ul>
+				</article>
+			</section>
+		</main>
+
+		<ExerciseNav
+			prev={{ href: "/exercise/05", label: "Agent Skills Performance Audit" }}
+			next={{ href: "/exercise/07", label: "Local Prompt API Chat" }}
+		/>
+	</div>
+
+	<script>
+		type CheckResponse = {
+			passed?: boolean;
+			expectedTools?: string[];
+			error?: string;
+		};
+
+		const button = document.querySelector<HTMLButtonElement>("#run-check");
+		const status = document.querySelector<HTMLElement>("#status");
+
+		const createStatusIcon = (src: string) => {
+			const img = document.createElement("img");
+			img.src = src;
+			img.alt = "";
+			img.setAttribute("aria-hidden", "true");
+
+			return img;
+		};
+
+		const setStatus = (message: string, type: "idle" | "success" | "error" = "idle") => {
+			if (!status) return;
+			const baseClass = "mt-5 rounded-2xl border bg-ink p-5 font-mono text-sm";
+
+			if (type === "success" || type === "error") {
+				const text = document.createElement("span");
+				text.textContent = message;
+				const iconSrc =
+					type === "success" ? status.dataset.successIcon ?? "" : status.dataset.errorIcon ?? "";
+
+				status.className = `${baseClass} ${
+					type === "success" ? "exercise-status-success" : "exercise-status-error"
+				} flex items-start gap-3`;
+				status.replaceChildren(createStatusIcon(iconSrc), text);
+				return;
+			}
+
+			status.className = `${baseClass} border-line text-muted`;
+			status.textContent = message;
+		};
+
+		button?.addEventListener("click", async () => {
+			if (!button) return;
+
+			button.disabled = true;
+			button.textContent = "Checking...";
+			setStatus("Checking expected MCP contract...");
+
+			try {
+				const response = await fetch("/api/exercise/06", { method: "POST" });
+				const payload = (await response.json()) as CheckResponse;
+
+				if (!response.ok || !payload.passed) {
+					throw new Error(payload.error ?? "The exercise contract check failed.");
+				}
+
+				setStatus(
+					`Contract ready: ${(payload.expectedTools ?? []).join(", ")}. Run pnpm mcp:zara:test next.`,
+					"success",
+				);
+			} catch (error) {
+				const message = error instanceof Error ? error.message : "Unknown error";
+				setStatus(`Exercise check failed: ${message}`, "error");
+			} finally {
+				button.disabled = false;
+				button.textContent = "Check exercise contract";
+			}
+		});
+	</script>
+</Layout>
