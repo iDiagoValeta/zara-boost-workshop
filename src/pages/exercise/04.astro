@@ -51,7 +51,7 @@ const summary = getDisplaySummary();
 			</section>
 
 			<section
-				class="mt-10 grid gap-px overflow-hidden rounded-2xl border border-line bg-line lg:grid-cols-[0.9fr_1.1fr]"
+				class="mt-10 grid gap-px overflow-hidden border border-line bg-line lg:grid-cols-[0.9fr_1.1fr]"
 			>
 				<article class="bg-surface p-6 sm:p-8">
 					<p class="font-mono text-xs tracking-[0.24em] text-muted uppercase">Challenge</p>
@@ -65,7 +65,7 @@ const summary = getDisplaySummary();
 						stay in visible copy, prompts or content instead of variable names.
 					</p>
 
-					<div class="mt-6 rounded-2xl border border-line bg-ink p-5">
+					<div class="mt-6 border border-line bg-ink p-5">
 						<p class="font-mono text-xs tracking-[0.2em] text-muted uppercase">Then ask the agent</p>
 						<p class="mt-4 font-mono text-sm leading-relaxed text-muted">
 							Recreate <span class="text-paper">src/exercise/04-coding-guidelines.ts</span>
@@ -75,7 +75,7 @@ const summary = getDisplaySummary();
 						</p>
 					</div>
 
-					<div class="mt-6 rounded-2xl border border-line bg-ink p-5">
+					<div class="mt-6 border border-line bg-ink p-5">
 						<p class="font-mono text-xs tracking-[0.2em] text-muted uppercase">Check validates</p>
 						<ul class="mt-4 space-y-3 font-mono text-sm text-muted">
 							<li class="flex gap-3">
@@ -109,7 +109,7 @@ const summary = getDisplaySummary();
 
 					<p class="mt-4 font-mono text-sm leading-relaxed text-muted">{summary.description}</p>
 
-					<article class="mt-6 rounded-2xl border border-line bg-ink p-5">
+					<article class="mt-6 border border-line bg-ink p-5">
 						<div class="flex items-start justify-between gap-4">
 							<div>
 								<p class="font-mono text-xs tracking-[0.18em] text-muted uppercase">
@@ -139,7 +139,7 @@ const summary = getDisplaySummary();
 						id="status"
 						data-error-icon={errorIconSrc}
 						data-success-icon={badgeCheckIconSrc}
-						class="mt-6 rounded-2xl border border-line bg-ink p-5 font-mono text-sm text-muted"
+						class="mt-6 border border-line bg-ink p-5 font-mono text-sm text-muted"
 					>
 						Ready. Click <span class="text-paper">Run check</span> to inspect the exercise source.
 					</div>
@@ -192,7 +192,7 @@ const summary = getDisplaySummary();
 
 		const setStatus = (message: string, type: "idle" | "success" | "error" = "idle") => {
 			if (!status) return;
-			const baseClass = "mt-6 rounded-2xl border bg-ink p-5 font-mono text-sm";
+			const baseClass = "mt-6 border bg-ink p-5 font-mono text-sm";
 
 			if (type === "success") {
 				setIconStatus(
@@ -222,7 +222,7 @@ const summary = getDisplaySummary();
 
 			for (const violation of violations) {
 				const item = document.createElement("article");
-				item.className = "rounded-2xl border border-line bg-ink p-4 font-mono text-sm";
+				item.className = "border border-line bg-ink p-4 font-mono text-sm";
 
 				const label = document.createElement("p");
 				label.className = "text-paper";

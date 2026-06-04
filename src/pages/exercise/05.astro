@@ -95,7 +95,7 @@ http://localhost:4321/exercise/05
 				</div>
 			</section>
 
-			<section class="grid gap-px overflow-hidden rounded-2xl border border-line bg-line lg:grid-cols-3 mt-10">
+			<section class="grid gap-px overflow-hidden border border-line bg-line lg:grid-cols-3 mt-10">
 				{
 					skillsBriefing.map((item) => (
 						<article class="bg-surface p-6 sm:p-8">
@@ -115,7 +115,7 @@ http://localhost:4321/exercise/05
 				}
 			</section>
 
-			<section class="mt-10 grid gap-px overflow-hidden rounded-2xl border border-line bg-line lg:grid-cols-[0.9fr_1.1fr]">
+			<section class="mt-10 grid gap-px overflow-hidden border border-line bg-line lg:grid-cols-[0.9fr_1.1fr]">
 				<article class="bg-surface p-6 sm:p-8">
 					<p class="font-mono text-xs tracking-[0.24em] text-muted uppercase">Challenge</p>
 					<h2 class="mt-4 font-mono text-xl font-medium text-paper">
@@ -128,7 +128,7 @@ http://localhost:4321/exercise/05
 						and ask the agent to fix it.
 					</p>
 
-					<div class="mt-6 rounded-2xl border border-line bg-ink p-5">
+					<div class="mt-6 border border-line bg-ink p-5">
 						<p class="font-mono text-xs tracking-[0.2em] text-muted uppercase">What to improve</p>
 						<ul class="mt-4 space-y-3 font-mono text-sm text-muted">
 							{
@@ -151,7 +151,7 @@ http://localhost:4321/exercise/05
 						id="status"
 						data-error-icon={errorIconSrc}
 						data-success-icon={badgeCheckIconSrc}
-						class="mt-5 rounded-2xl border border-line bg-ink p-5 font-mono text-sm text-muted"
+						class="mt-5 border border-line bg-ink p-5 font-mono text-sm text-muted"
 					>
 						Ready. Lighthouse is the real score, this check only looks for starter anti-patterns.
 					</div>
@@ -172,7 +172,7 @@ http://localhost:4321/exercise/05
 				</section>
 			</section>
 
-			<section class="code-frame mt-10 overflow-hidden rounded-2xl border border-line bg-ink">
+			<section class="code-frame mt-10 overflow-hidden border border-line bg-ink">
 				<div class="border-line flex items-center gap-2 border-b px-6 py-4">
 					<span class="h-3 w-3 rounded-full bg-line"></span>
 					<span class="h-3 w-3 rounded-full bg-line"></span>
@@ -182,7 +182,7 @@ http://localhost:4321/exercise/05
 				<Code code={agentPrompt} lang="md" theme="github-dark" />
 			</section>
 
-			<section class="mt-16 overflow-hidden rounded-[2rem] border border-line bg-surface">
+			<section class="mt-16 overflow-hidden border border-line bg-surface">
 				<div class="grid gap-px bg-line lg:grid-cols-[1.1fr_0.9fr]">
 					<article class="bg-surface p-6 sm:p-10">
 						<p class="font-mono text-xs tracking-[0.24em] text-muted uppercase">
@@ -209,7 +209,7 @@ http://localhost:4321/exercise/05
 							loading="eager"
 							decoding="async"
 							fetchpriority={performanceExperiment.preloadHero ? "high" : "auto"}
-							class="aspect-[4/5] w-full rounded-[1.5rem] border border-line object-cover"
+							class="aspect-[4/5] w-full border border-line object-cover"
 							{...getImageDimensions(performanceExperiment.hero)}
 						/>
 						<figcaption class="mt-3 font-mono text-xs leading-relaxed text-muted">
@@ -227,7 +227,7 @@ http://localhost:4321/exercise/05
 									alt={image.alt}
 									loading={performanceExperiment.useLazyLoading ? "lazy" : "eager"}
 									decoding="async"
-									class="aspect-[4/5] w-full rounded-2xl border border-line object-cover"
+									class="aspect-[4/5] w-full border border-line object-cover"
 									{...getImageDimensions(image)}
 								/>
 								<figcaption class="mt-3 font-mono text-xs leading-relaxed text-muted">
@@ -242,7 +242,7 @@ http://localhost:4321/exercise/05
 					performanceExperiment.renderInvisiblePanels && (
 						<div class="absolute left-[-9999px] top-auto grid w-[960px] grid-cols-4 gap-2" aria-hidden="true">
 							{hiddenPanels.map((panel) => (
-								<article class="rounded-xl border border-line bg-surface p-4">
+								<article class="border border-line bg-surface p-4">
 									<h3 class="font-mono text-sm text-paper">{panel}</h3>
 									<p class="mt-2 font-mono text-xs text-muted">
 										This invisible panel exists only to make the starter page heavier.
@@ -255,7 +255,10 @@ http://localhost:4321/exercise/05
 			</section>
 		</main>
 
-		<ExerciseNav prev={{ href: "/exercise/04", label: "AGENTS.md Coding Rules" }} />
+		<ExerciseNav
+			prev={{ href: "/exercise/04", label: "AGENTS.md Coding Rules" }}
+			next={{ href: "/exercise/06", label: "Zara Products MCP Server" }}
+		/>
 	</div>
 
 	{
@@ -310,7 +313,7 @@ http://localhost:4321/exercise/05
 
 		const setStatus = (message: string, type: "idle" | "success" | "error" = "idle") => {
 			if (!status) return;
-			const baseClass = "mt-5 rounded-2xl border bg-ink p-5 font-mono text-sm";
+			const baseClass = "mt-5 border bg-ink p-5 font-mono text-sm";
 
 			if (type === "success") {
 				setIconStatus(

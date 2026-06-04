@@ -2,76 +2,6 @@
 import { Code } from "astro:components";
 import Layout from "../layouts/Layout.astro";
 
-const productApiExample = `# Exercise 01
-
-Open \`src/exercise/01-our-first-query.ts\` and complete the challenge.
-
-## Goal
-
-Generate localized product copy for EN, ES and FR using OpenAI.
-
-## TODO
-
-- Write the system prompt.
-- Create the user payload.
-- Call OpenAI and return valid JSON.`;
-
-const chatbotStreamingExample = `# Exercise 02
-
-Open \`src/exercise/02-zara-chatbot-streaming.ts\` and complete the challenge.
-
-## Goal
-
-Turn a Zara chatbot from full responses into live streaming.
-
-## TODO
-
-- Find the OpenAI chat completion call.
-- Enable streaming in the SDK request.
-- Keep returning the SDK response directly.`;
-
-const virtualTryOnExample = `# Exercise 03
-
-Open \`src/exercise/03-virtual-try-on.ts\` and complete the challenge.
-
-## Goal
-
-Use GPT Image 2 to dress an uploaded person with the Zara product reference.
-
-## TODO
-
-- Write the virtual try-on prompt.
-- Send the person and garment images to the edit endpoint.
-- Return the generated image.`;
-
-const codingGuidelinesExample = `# Exercise 04
-
-Open \`AGENTS.md\` and teach the agent this project's coding style.
-
-## Goal
-
-Ask the agent to recreate \`src/exercise/04-coding-guidelines.ts\` while keeping the page working.
-
-## TODO
-
-- Describe the identifier naming rules in AGENTS.md.
-- Keep brand references out of code identifiers.
-- Run the check page to validate the rebuilt file.`;
-
-const agentSkillsExample = `# Exercise 05
-
-Open \`src/pages/exercise/05.astro\` and capture a Lighthouse baseline.
-
-## Goal
-
-Install an Agent Skill from addyosmani/web-quality-skills and use it to improve page performance.
-
-## TODO
-
-- Explain skills.sh and autoskills.
-- Install the Web Quality Skills pack or the performance skill.
-- Ask the agent to optimize the page and compare Lighthouse before / after.`;
-
 const setupCommands = `corepack enable
 corepack prepare pnpm@latest-11 --activate
 pnpm install
@@ -146,11 +76,6 @@ const agenda = [
 			style="background-image:linear-gradient(var(--color-line) 1px,transparent 1px),linear-gradient(90deg,var(--color-line) 1px,transparent 1px);background-size:64px 64px;"
 		>
 		</div>
-		<div
-			class="pointer-events-none absolute -top-40 left-1/2 -z-10 h-[480px] w-[860px] -translate-x-1/2 rounded-full opacity-20 blur-[140px]"
-			style="background:radial-gradient(circle, #ffffff, transparent 70%);"
-		>
-		</div>
 
 		<header class="mx-auto flex max-w-6xl items-center justify-between px-6 py-6">
 			<a href="/" class="flex items-center gap-3">
@@ -172,9 +97,8 @@ const agenda = [
 
 				<p class="mt-8 max-w-2xl font-mono text-base leading-relaxed text-muted sm:text-lg">
 					Stop using AI like autocomplete. In two hours we go
-					<span class="text-paper">from prompt and context to agent systems</span>: we build a
-					real AI workflow for a fashion ecommerce frontend team — generative AI, skills, MCP,
-					local models and advanced agent workflows.
+					<span class="text-paper">from prompt and context to agent systems</span>, building a
+					real AI workflow for a fashion ecommerce team.
 				</p>
 
 				<div class="mt-10 flex flex-wrap items-center gap-4">
@@ -195,14 +119,9 @@ const agenda = [
 
 			<!-- LEVELS -->
 			<section id="levels" class="pt-20">
-				<div class="flex items-baseline justify-between">
-					<h2 class="font-pixel text-2xl text-paper sm:text-3xl">The 6 levels</h2>
-					<span class="font-mono text-xs tracking-[0.2em] text-muted uppercase"
-						>From prompts to agent systems</span
-					>
-				</div>
+				<h2 class="font-pixel text-2xl text-paper sm:text-3xl">The 6 levels</h2>
 
-				<div class="mt-8 grid gap-px overflow-hidden rounded-2xl border border-line bg-line sm:grid-cols-2 lg:grid-cols-3">
+				<div class="mt-8 grid gap-px overflow-hidden border border-line bg-line sm:grid-cols-2 lg:grid-cols-3">
 					{
 						levels.map((lvl) => (
 							<article
@@ -233,7 +152,7 @@ const agenda = [
 					>
 				</div>
 
-				<div class="mt-8 grid gap-px overflow-hidden rounded-2xl border border-line bg-line lg:grid-cols-2">
+				<div class="mt-8 overflow-hidden border border-line bg-line">
 					<div class="bg-surface p-8">
 						<span class="font-mono text-[11px] tracking-[0.25em] text-muted uppercase"
 							>Call OpenAI</span
@@ -242,11 +161,10 @@ const agenda = [
 							Generate localized product descriptions
 						</h3>
 						<p class="mt-4 font-mono text-sm leading-relaxed text-muted">
-							Our goal: create an OpenAI account, call a real AI model and get
-							back clean, on-brand copy that's ready for an international store.
-							The file starts as a challenge: add the API key, write the prompt and ask
-							for <span class="text-paper">structured JSON</span> so the frontend can render it
-							safely.
+							Create an OpenAI account, call a real AI model and get back clean,
+							on-brand copy ready for an international store. Add the API key, write the
+							prompt and ask for <span class="text-paper">structured JSON</span> so the
+							frontend can render it safely.
 						</p>
 
 						<ul class="mt-6 space-y-3 font-mono text-sm text-muted">
@@ -268,16 +186,6 @@ const agenda = [
 							Check exercise result &rarr;
 						</a>
 					</div>
-
-					<div class="code-frame code-frame-wrap bg-ink">
-						<div class="border-line flex items-center gap-2 border-b px-6 py-4">
-							<span class="h-3 w-3 rounded-full bg-line"></span>
-							<span class="h-3 w-3 rounded-full bg-line"></span>
-							<span class="h-3 w-3 rounded-full bg-line"></span>
-							<span class="ml-2 font-mono text-xs text-muted">src/exercise/01-our-first-query.ts</span>
-						</div>
-						<Code code={productApiExample} lang="md" theme="github-dark" />
-					</div>
 				</div>
 			</section>
 
@@ -290,7 +198,7 @@ const agenda = [
 					>
 				</div>
 
-				<div class="mt-8 grid gap-px overflow-hidden rounded-2xl border border-line bg-line lg:grid-cols-2">
+				<div class="mt-8 overflow-hidden border border-line bg-line">
 					<div class="bg-surface p-8">
 						<span class="font-mono text-[11px] tracking-[0.25em] text-muted uppercase"
 							>Streaming</span
@@ -299,9 +207,9 @@ const agenda = [
 							Make Zara Assist answer live
 						</h3>
 						<p class="mt-4 font-mono text-sm leading-relaxed text-muted">
-							Our goal: take a working Zara chatbot and make the response arrive
-							token by token. The test page detects whether the exercise is still using
-							a full JSON response or has switched to <span class="text-paper">streaming</span>.
+							Take a working Zara chatbot and make the response arrive token by token.
+							The test page detects whether it still uses a full JSON response or has
+							switched to <span class="text-paper">streaming</span>.
 						</p>
 
 						<ul class="mt-6 space-y-3 font-mono text-sm text-muted">
@@ -323,18 +231,6 @@ const agenda = [
 							Check chatbot result &rarr;
 						</a>
 					</div>
-
-					<div class="code-frame code-frame-wrap bg-ink">
-						<div class="border-line flex items-center gap-2 border-b px-6 py-4">
-							<span class="h-3 w-3 rounded-full bg-line"></span>
-							<span class="h-3 w-3 rounded-full bg-line"></span>
-							<span class="h-3 w-3 rounded-full bg-line"></span>
-							<span class="ml-2 font-mono text-xs text-muted"
-								>src/exercise/02-zara-chatbot-streaming.ts</span
-							>
-						</div>
-						<Code code={chatbotStreamingExample} lang="md" theme="github-dark" />
-					</div>
 				</div>
 			</section>
 
@@ -347,7 +243,7 @@ const agenda = [
 					>
 				</div>
 
-				<div class="mt-8 grid gap-px overflow-hidden rounded-2xl border border-line bg-line lg:grid-cols-2">
+				<div class="mt-8 overflow-hidden border border-line bg-line">
 					<div class="bg-surface p-8">
 						<span class="font-mono text-[11px] tracking-[0.25em] text-muted uppercase"
 							>GPT Image</span
@@ -356,9 +252,9 @@ const agenda = [
 							Dress a customer with a product photo
 						</h3>
 						<p class="mt-4 font-mono text-sm leading-relaxed text-muted">
-							Our goal: use a fixed Zara garment image and a person uploaded by the user.
-							The exercise sends both images to <span class="text-paper">gpt-image-2</span>
-							and renders a realistic virtual try-on result.
+							Use a fixed Zara garment image and a person uploaded by the user. The
+							exercise sends both images to <span class="text-paper">gpt-image-2</span> and
+							renders a realistic virtual try-on result.
 						</p>
 
 						<ul class="mt-6 space-y-3 font-mono text-sm text-muted">
@@ -380,18 +276,6 @@ const agenda = [
 							Check try-on result &rarr;
 						</a>
 					</div>
-
-					<div class="code-frame code-frame-wrap bg-ink">
-						<div class="border-line flex items-center gap-2 border-b px-6 py-4">
-							<span class="h-3 w-3 rounded-full bg-line"></span>
-							<span class="h-3 w-3 rounded-full bg-line"></span>
-							<span class="h-3 w-3 rounded-full bg-line"></span>
-							<span class="ml-2 font-mono text-xs text-muted"
-								>src/exercise/03-virtual-try-on.ts</span
-							>
-						</div>
-						<Code code={virtualTryOnExample} lang="md" theme="github-dark" />
-					</div>
 				</div>
 			</section>
 
@@ -404,7 +288,7 @@ const agenda = [
 					>
 				</div>
 
-				<div class="mt-8 grid gap-px overflow-hidden rounded-2xl border border-line bg-line lg:grid-cols-2">
+				<div class="mt-8 overflow-hidden border border-line bg-line">
 					<div class="bg-surface p-8">
 						<span class="font-mono text-[11px] tracking-[0.25em] text-muted uppercase"
 							>Coding style</span
@@ -413,7 +297,7 @@ const agenda = [
 							Teach the agent project naming rules
 						</h3>
 						<p class="mt-4 font-mono text-sm leading-relaxed text-muted">
-							Our goal: add business-oriented coding guidance to
+							Add business-oriented coding guidance to
 							<span class="text-paper">AGENTS.md</span>, then ask the agent to rebuild a
 							working file. The check page verifies that the source follows the naming
 							rules and the exported contract still renders correctly.
@@ -438,16 +322,6 @@ const agenda = [
 							Check coding guidelines &rarr;
 						</a>
 					</div>
-
-					<div class="code-frame code-frame-wrap bg-ink">
-						<div class="border-line flex items-center gap-2 border-b px-6 py-4">
-							<span class="h-3 w-3 rounded-full bg-line"></span>
-							<span class="h-3 w-3 rounded-full bg-line"></span>
-							<span class="h-3 w-3 rounded-full bg-line"></span>
-							<span class="ml-2 font-mono text-xs text-muted">src/exercise/04-coding-guidelines.ts</span>
-						</div>
-						<Code code={codingGuidelinesExample} lang="md" theme="github-dark" />
-					</div>
 				</div>
 			</section>
 
@@ -460,7 +334,7 @@ const agenda = [
 					>
 				</div>
 
-				<div class="mt-8 grid gap-px overflow-hidden rounded-2xl border border-line bg-line lg:grid-cols-2">
+				<div class="mt-8 overflow-hidden border border-line bg-line">
 					<div class="bg-surface p-8">
 						<span class="font-mono text-[11px] tracking-[0.25em] text-muted uppercase"
 							>skills.sh + autoskills</span
@@ -469,9 +343,9 @@ const agenda = [
 							Use a Web Quality Skill to improve Lighthouse
 						</h3>
 						<p class="mt-4 font-mono text-sm leading-relaxed text-muted">
-							Our goal: install a reusable Agent Skill, let it guide the agent through a
-							performance audit and compare <span class="text-paper">before / after</span>
-							scores in Lighthouse. The page starts deliberately rough so the improvement is visible.
+							Install a reusable Agent Skill, let it guide the agent through a performance
+							audit and compare <span class="text-paper">before / after</span> scores in
+							Lighthouse. The page starts deliberately rough so the improvement is visible.
 						</p>
 
 						<ul class="mt-6 space-y-3 font-mono text-sm text-muted">
@@ -493,15 +367,97 @@ const agenda = [
 							Check Agent Skills exercise &rarr;
 						</a>
 					</div>
+				</div>
+			</section>
 
-					<div class="code-frame code-frame-wrap bg-ink">
-						<div class="border-line flex items-center gap-2 border-b px-6 py-4">
-							<span class="h-3 w-3 rounded-full bg-line"></span>
-							<span class="h-3 w-3 rounded-full bg-line"></span>
-							<span class="h-3 w-3 rounded-full bg-line"></span>
-							<span class="ml-2 font-mono text-xs text-muted">src/pages/exercise/05.astro</span>
-						</div>
-						<Code code={agentSkillsExample} lang="md" theme="github-dark" />
+			<!-- SIXTH EXERCISE -->
+			<section id="exercise-06" class="pt-20">
+				<div class="flex items-baseline justify-between">
+					<h2 class="font-pixel text-2xl text-paper sm:text-3xl">Sixth exercise</h2>
+					<span class="font-mono text-xs tracking-[0.2em] text-muted uppercase"
+						>Level 04 · MCP</span
+					>
+				</div>
+
+				<div class="mt-8 overflow-hidden rounded-2xl border border-line bg-line">
+					<div class="bg-surface p-8">
+						<span class="font-mono text-[11px] tracking-[0.25em] text-muted uppercase"
+							>Model Context Protocol</span
+						>
+						<h3 class="mt-4 font-mono text-xl font-medium text-paper">
+							Expose the Zara product API as an MCP server
+						</h3>
+						<p class="mt-4 font-mono text-sm leading-relaxed text-muted">
+							Turn the local fake product database into tools that Cursor can call:
+							<span class="text-paper">list_products</span>,
+							<span class="text-paper">get_product</span> and
+							<span class="text-paper">search_products</span>.
+						</p>
+
+						<ul class="mt-6 space-y-3 font-mono text-sm text-muted">
+							<li class="flex gap-3">
+								<span class="text-paper">→</span> Create a stdio MCP server with the TypeScript SDK
+							</li>
+							<li class="flex gap-3">
+								<span class="text-paper">→</span> Reuse the existing product API helpers
+							</li>
+							<li class="flex gap-3">
+								<span class="text-paper">→</span> Test it with MCP Inspector and a smoke-test client
+							</li>
+						</ul>
+
+						<a
+							href="/exercise/06"
+							class="mt-8 inline-flex rounded-full border border-line px-5 py-3 font-mono text-sm text-paper transition hover:bg-ink"
+						>
+							Check MCP exercise &rarr;
+						</a>
+					</div>
+				</div>
+			</section>
+
+			<!-- SEVENTH EXERCISE -->
+			<section id="exercise-07" class="pt-20">
+				<div class="flex items-baseline justify-between">
+					<h2 class="font-pixel text-2xl text-paper sm:text-3xl">Seventh exercise</h2>
+					<span class="font-mono text-xs tracking-[0.2em] text-muted uppercase"
+						>Level 05 · Local AI</span
+					>
+				</div>
+
+				<div class="mt-8 overflow-hidden rounded-2xl border border-line bg-line">
+					<div class="bg-surface p-8">
+						<span class="font-mono text-[11px] tracking-[0.25em] text-muted uppercase"
+							>Chrome Prompt API</span
+						>
+						<h3 class="mt-4 font-mono text-xl font-medium text-paper">
+							Run the Zara chatbot fully on-device
+						</h3>
+						<p class="mt-4 font-mono text-sm leading-relaxed text-muted">
+							Rebuild the exercise 02 chatbot with Chrome's built-in
+							<span class="text-paper">Prompt API</span> (Gemini Nano). No server, no API
+							key: the model runs locally and the page detects whether your browser
+							supports it.
+						</p>
+
+						<ul class="mt-6 space-y-3 font-mono text-sm text-muted">
+							<li class="flex gap-3">
+								<span class="text-paper">→</span> Detect Chrome and Prompt API availability
+							</li>
+							<li class="flex gap-3">
+								<span class="text-paper">→</span> Create an on-device LanguageModel session
+							</li>
+							<li class="flex gap-3">
+								<span class="text-paper">→</span> Get the answer with session.prompt()
+							</li>
+						</ul>
+
+						<a
+							href="/exercise/07"
+							class="mt-8 inline-flex rounded-full border border-line px-5 py-3 font-mono text-sm text-paper transition hover:bg-ink"
+						>
+							Check local Prompt API exercise &rarr;
+						</a>
 					</div>
 				</div>
 			</section>
@@ -509,7 +465,7 @@ const agenda = [
 			<!-- AGENDA -->
 			<section id="agenda" class="pt-20">
 				<h2 class="font-pixel text-2xl text-paper sm:text-3xl">Agenda</h2>
-				<div class="mt-8 overflow-hidden rounded-2xl border border-line">
+				<div class="mt-8 overflow-hidden border border-line">
 					{
 						agenda.map((row, i) => (
 							<div
@@ -535,12 +491,9 @@ const agenda = [
 					Clone the repo, install Node.js and pnpm, then run the dev server. Full
 					instructions are in the <span class="text-paper">README</span>.
 				</p>
-				<div class="code-frame mt-8 overflow-hidden rounded-2xl border border-line bg-surface">
-					<div class="border-line flex items-center gap-2 border-b px-6 py-4">
-						<span class="h-3 w-3 rounded-full bg-line"></span>
-						<span class="h-3 w-3 rounded-full bg-line"></span>
-						<span class="h-3 w-3 rounded-full bg-line"></span>
-						<span class="ml-2 font-mono text-xs text-muted">terminal</span>
+				<div class="code-frame mt-8 overflow-hidden border border-line bg-surface">
+					<div class="border-line border-b px-6 py-4">
+						<span class="font-mono text-xs tracking-[0.2em] text-muted uppercase">terminal</span>
 					</div>
 					<Code code={setupCommands} lang="shell" theme="github-dark" />
 				</div>
@@ -548,16 +501,9 @@ const agenda = [
 		</main>
 
 		<footer class="border-line border-t">
-			<div
-				class="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-6 py-8 sm:flex-row"
-			>
-				<div class="flex items-center gap-3">
-					<img src="/logo.svg" alt="Zara" width="60" height="25" class="h-5 w-auto" />
-					<span class="font-mono text-xs tracking-[0.2em] text-muted uppercase">Boost</span>
-				</div>
-				<span class="font-mono text-xs text-muted">
-					AI for Developers Workshop · built live by midudev
-				</span>
+			<div class="mx-auto flex max-w-6xl items-center gap-3 px-6 py-8">
+				<img src="/logo.svg" alt="Zara" width="60" height="25" class="h-5 w-auto" />
+				<span class="font-mono text-xs tracking-[0.2em] text-muted uppercase">Boost</span>
 			</div>
 		</footer>
 	</div>

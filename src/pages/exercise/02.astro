@@ -43,7 +43,7 @@ import { suggestedQuestions } from "../../exercise/02-zara-chatbot-streaming";
 			</section>
 
 			<section
-				class="mt-10 grid gap-px overflow-hidden rounded-2xl border border-line bg-line lg:grid-cols-[0.8fr_1.2fr]"
+				class="mt-10 grid gap-px overflow-hidden border border-line bg-line lg:grid-cols-[0.8fr_1.2fr]"
 			>
 				<article class="bg-surface p-6 sm:p-8">
 					<p class="font-mono text-xs tracking-[0.24em] text-muted uppercase">Challenge</p>
@@ -55,7 +55,7 @@ import { suggestedQuestions } from "../../exercise/02-zara-chatbot-streaming";
 						Open the exercise file, find the TODOs and convert the call to streaming.
 					</p>
 
-					<div class="mt-6 rounded-2xl border border-line bg-ink p-5">
+					<div class="mt-6 border border-line bg-ink p-5">
 						<p class="font-mono text-xs tracking-[0.2em] text-muted uppercase">Test detects</p>
 						<ul class="mt-4 space-y-3 font-mono text-sm text-muted">
 							<li class="flex gap-3">
@@ -89,9 +89,9 @@ import { suggestedQuestions } from "../../exercise/02-zara-chatbot-streaming";
 
 					<div
 						id="chat-log"
-						class="mt-6 flex max-h-[520px] min-h-[360px] flex-col gap-4 overflow-y-auto rounded-2xl border border-line bg-ink p-4"
+						class="mt-6 flex max-h-[520px] min-h-[360px] flex-col gap-4 overflow-y-auto border border-line bg-ink p-4"
 					>
-						<article class="max-w-[86%] rounded-2xl border border-line bg-surface p-4">
+						<article class="max-w-[86%] border border-line bg-surface p-4">
 							<p class="font-mono text-[11px] tracking-[0.18em] text-muted uppercase">Zara Assist</p>
 							<p class="mt-2 font-mono text-sm leading-relaxed text-paper">
 								Hola. Puedo ayudarte a encontrar una prenda, combinar un look o ajustar una
@@ -189,8 +189,8 @@ import { suggestedQuestions } from "../../exercise/02-zara-chatbot-streaming";
 			const article = document.createElement("article");
 			const isUser = role === "user";
 			article.className = isUser
-				? "ml-auto max-w-[86%] rounded-2xl border border-line bg-paper p-4 text-ink"
-				: "max-w-[86%] rounded-2xl border border-line bg-surface p-4 text-paper";
+				? "ml-auto max-w-[86%] border border-line bg-paper p-4 text-ink"
+				: "max-w-[86%] border border-line bg-surface p-4 text-paper";
 
 			const label = document.createElement("p");
 			label.className = isUser
