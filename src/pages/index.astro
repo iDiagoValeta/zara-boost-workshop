@@ -1,11 +1,564 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
+import { Code } from "astro:components";
+import Layout from "../layouts/Layout.astro";
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+const productApiExample = `# Exercise 01
+
+Open \`src/exercise/01-our-first-query.ts\` and complete the challenge.
+
+## Goal
+
+Generate localized product copy for EN, ES and FR using OpenAI.
+
+## TODO
+
+- Write the system prompt.
+- Create the user payload.
+- Call OpenAI and return valid JSON.`;
+
+const chatbotStreamingExample = `# Exercise 02
+
+Open \`src/exercise/02-zara-chatbot-streaming.ts\` and complete the challenge.
+
+## Goal
+
+Turn a Zara chatbot from full responses into live streaming.
+
+## TODO
+
+- Find the OpenAI chat completion call.
+- Enable streaming in the SDK request.
+- Keep returning the SDK response directly.`;
+
+const virtualTryOnExample = `# Exercise 03
+
+Open \`src/exercise/03-virtual-try-on.ts\` and complete the challenge.
+
+## Goal
+
+Use GPT Image 2 to dress an uploaded person with the Zara product reference.
+
+## TODO
+
+- Write the virtual try-on prompt.
+- Send the person and garment images to the edit endpoint.
+- Return the generated image.`;
+
+const codingGuidelinesExample = `# Exercise 04
+
+Open \`AGENTS.md\` and teach the agent this project's coding style.
+
+## Goal
+
+Ask the agent to recreate \`src/exercise/04-coding-guidelines.ts\` while keeping the page working.
+
+## TODO
+
+- Describe the identifier naming rules in AGENTS.md.
+- Keep brand references out of code identifiers.
+- Run the check page to validate the rebuilt file.`;
+
+const agentSkillsExample = `# Exercise 05
+
+Open \`src/pages/exercise/05.astro\` and capture a Lighthouse baseline.
+
+## Goal
+
+Install an Agent Skill from addyosmani/web-quality-skills and use it to improve page performance.
+
+## TODO
+
+- Explain skills.sh and autoskills.
+- Install the Web Quality Skills pack or the performance skill.
+- Ask the agent to optimize the page and compare Lighthouse before / after.`;
+
+const setupCommands = `corepack enable
+corepack prepare pnpm@latest-11 --activate
+pnpm install
+pnpm dev`;
+
+const levels = [
+	{
+		n: "01",
+		title: "Prompt + Context",
+		q: "Can we make the model understand the task?",
+		desc: "Prompts, project context, tokens, context windows, cost, latency and response quality.",
+		accent: "#ffd6d6",
+		muted: "rgba(255, 214, 214, 0.68)",
+	},
+	{
+		n: "02",
+		title: "Generative AI",
+		q: "Can we build real product features with models?",
+		desc: "The first three exercises: product copy, streaming chatbot and virtual try-on with images.",
+		accent: "#d6e8ff",
+		muted: "rgba(214, 232, 255, 0.68)",
+	},
+	{
+		n: "03",
+		title: "AGENTS.md + Skills",
+		q: "Can we teach it our standards?",
+		desc: "Persistent project instructions, reusable agent skills and specialized workshop workflows.",
+		accent: "#e2ffd6",
+		muted: "rgba(226, 255, 214, 0.68)",
+	},
+	{
+		n: "04",
+		title: "MCP",
+		q: "Can we connect the agent to real tools?",
+		desc: "Expose external capabilities through Model Context Protocol: APIs, data, files and design tools.",
+		accent: "#ffefd6",
+		muted: "rgba(255, 239, 214, 0.68)",
+	},
+	{
+		n: "05",
+		title: "Local AI + WebGPU",
+		q: "Can we run AI without sending everything to a server?",
+		desc: "Local models, browser inference, WebGPU and the tradeoffs between privacy, size and quality.",
+		accent: "#e8d6ff",
+		muted: "rgba(232, 214, 255, 0.68)",
+	},
+	{
+		n: "06",
+		title: "Advanced Workflows",
+		q: "Can we design systems with agents?",
+		desc: "Memory, subagents, parallel work, evaluations, guardrails, CI agents and improvement loops.",
+		accent: "#d6fffa",
+		muted: "rgba(214, 255, 250, 0.68)",
+	},
+];
+
+const agenda = [
+	{ time: "0:00", section: "Intro · AI for developers in 2026", format: "Talk + tiny demo" },
+	{ time: "0:10", section: "Level 01 · Prompt + Context, tokens and context windows", format: "Interactive" },
+	{ time: "0:25", section: "Level 02 · Generative AI with product copy, streaming and images", format: "Hands-on" },
+	{ time: "0:55", section: "Level 03 · AGENTS.md and reusable Agent Skills", format: "Demo + live coding" },
+	{ time: "1:15", section: "Level 04 · MCP: connect the agent to external tools", format: "Live coding" },
+	{ time: "1:35", section: "Level 05 · Local AI and WebGPU in the browser", format: "Demo" },
+	{ time: "1:50", section: "Level 06 · Memory, subagents and advanced workflows", format: "Closing" },
+];
 ---
 
 <Layout>
-	<Welcome />
+	<div class="relative min-h-screen overflow-hidden">
+		<div
+			class="pointer-events-none absolute inset-0 -z-10 opacity-[0.04]"
+			style="background-image:linear-gradient(var(--color-line) 1px,transparent 1px),linear-gradient(90deg,var(--color-line) 1px,transparent 1px);background-size:64px 64px;"
+		>
+		</div>
+		<div
+			class="pointer-events-none absolute -top-40 left-1/2 -z-10 h-[480px] w-[860px] -translate-x-1/2 rounded-full opacity-20 blur-[140px]"
+			style="background:radial-gradient(circle, #ffffff, transparent 70%);"
+		>
+		</div>
+
+		<header class="mx-auto flex max-w-6xl items-center justify-between px-6 py-6">
+			<a href="/" class="flex items-center gap-3">
+				<img src="/logo.svg" alt="Zara" width="74" height="31" class="h-6 w-auto" />
+				<span class="text-line text-2xl leading-none">/</span>
+				<span class="font-mono text-xs tracking-[0.35em] text-muted uppercase">Boost</span>
+			</a>
+			<span class="font-mono text-xs tracking-[0.2em] text-muted uppercase">by midudev</span>
+		</header>
+
+		<main class="mx-auto max-w-6xl px-6 pb-24">
+			<!-- HERO -->
+			<section class="border-line border-y py-16 sm:py-24">
+				<h1
+					class="font-pixel text-5xl leading-[0.95] tracking-tight text-paper sm:text-7xl lg:text-8xl"
+				>
+					AI for<br />Developers
+				</h1>
+
+				<p class="mt-8 max-w-2xl font-mono text-base leading-relaxed text-muted sm:text-lg">
+					Stop using AI like autocomplete. In two hours we go
+					<span class="text-paper">from prompt and context to agent systems</span>: we build a
+					real AI workflow for a fashion ecommerce frontend team — generative AI, skills, MCP,
+					local models and advanced agent workflows.
+				</p>
+
+				<div class="mt-10 flex flex-wrap items-center gap-4">
+					<a
+						href="#levels"
+						class="bg-paper rounded-full px-6 py-3 font-mono text-sm font-medium tracking-wide text-ink transition hover:opacity-80"
+					>
+						See the 6 levels
+					</a>
+					<a
+						href="#exercise"
+						class="border-line rounded-full border px-6 py-3 font-mono text-sm tracking-wide text-paper transition hover:bg-surface-2"
+					>
+						First exercise &rarr;
+					</a>
+				</div>
+			</section>
+
+			<!-- LEVELS -->
+			<section id="levels" class="pt-20">
+				<div class="flex items-baseline justify-between">
+					<h2 class="font-pixel text-2xl text-paper sm:text-3xl">The 6 levels</h2>
+					<span class="font-mono text-xs tracking-[0.2em] text-muted uppercase"
+						>From prompts to agent systems</span
+					>
+				</div>
+
+				<div class="mt-8 grid gap-px overflow-hidden rounded-2xl border border-line bg-line sm:grid-cols-2 lg:grid-cols-3">
+					{
+						levels.map((lvl) => (
+							<article
+								class="level-card group bg-surface p-6 transition hover:bg-surface-2"
+								style={`--level-accent:${lvl.accent};--level-muted:${lvl.muted};`}
+							>
+								<div class="flex items-center justify-between">
+									<span class="level-card-accent font-pixel text-3xl">{lvl.n}</span>
+									<span class="level-card-muted font-mono text-[11px] tracking-[0.25em] uppercase">
+										Level
+									</span>
+								</div>
+								<h3 class="level-card-accent mt-5 font-mono text-lg font-medium">{lvl.title}</h3>
+								<p class="level-card-muted mt-2 font-mono text-sm italic">&ldquo;{lvl.q}&rdquo;</p>
+								<p class="level-card-muted mt-4 font-mono text-sm leading-relaxed">{lvl.desc}</p>
+							</article>
+						))
+					}
+				</div>
+			</section>
+
+			<!-- FIRST EXERCISE -->
+			<section id="exercise" class="pt-20">
+				<div class="flex items-baseline justify-between">
+					<h2 class="font-pixel text-2xl text-paper sm:text-3xl">First exercise</h2>
+					<span class="font-mono text-xs tracking-[0.2em] text-muted uppercase"
+						>Level 02 · Generative AI</span
+					>
+				</div>
+
+				<div class="mt-8 grid gap-px overflow-hidden rounded-2xl border border-line bg-line lg:grid-cols-2">
+					<div class="bg-surface p-8">
+						<span class="font-mono text-[11px] tracking-[0.25em] text-muted uppercase"
+							>Call OpenAI</span
+						>
+						<h3 class="mt-4 font-mono text-xl font-medium text-paper">
+							Generate localized product descriptions
+						</h3>
+						<p class="mt-4 font-mono text-sm leading-relaxed text-muted">
+							Our goal: create an OpenAI account, call a real AI model and get
+							back clean, on-brand copy that's ready for an international store.
+							The file starts as a challenge: add the API key, write the prompt and ask
+							for <span class="text-paper">structured JSON</span> so the frontend can render it
+							safely.
+						</p>
+
+						<ul class="mt-6 space-y-3 font-mono text-sm text-muted">
+							<li class="flex gap-3">
+								<span class="text-paper">→</span> Create an OpenAI account and API key
+							</li>
+							<li class="flex gap-3">
+								<span class="text-paper">→</span> Call a model using the OpenAI SDK
+							</li>
+							<li class="flex gap-3">
+								<span class="text-paper">→</span> Localize product copy for EN / ES / FR
+							</li>
+						</ul>
+
+						<a
+							href="/exercise/01"
+							class="mt-8 inline-flex rounded-full border border-line px-5 py-3 font-mono text-sm text-paper transition hover:bg-ink"
+						>
+							Check exercise result &rarr;
+						</a>
+					</div>
+
+					<div class="code-frame code-frame-wrap bg-ink">
+						<div class="border-line flex items-center gap-2 border-b px-6 py-4">
+							<span class="h-3 w-3 rounded-full bg-line"></span>
+							<span class="h-3 w-3 rounded-full bg-line"></span>
+							<span class="h-3 w-3 rounded-full bg-line"></span>
+							<span class="ml-2 font-mono text-xs text-muted">src/exercise/01-our-first-query.ts</span>
+						</div>
+						<Code code={productApiExample} lang="md" theme="github-dark" />
+					</div>
+				</div>
+			</section>
+
+			<!-- SECOND EXERCISE -->
+			<section id="exercise-02" class="pt-20">
+				<div class="flex items-baseline justify-between">
+					<h2 class="font-pixel text-2xl text-paper sm:text-3xl">Second exercise</h2>
+					<span class="font-mono text-xs tracking-[0.2em] text-muted uppercase"
+						>Level 02 · Generative AI</span
+					>
+				</div>
+
+				<div class="mt-8 grid gap-px overflow-hidden rounded-2xl border border-line bg-line lg:grid-cols-2">
+					<div class="bg-surface p-8">
+						<span class="font-mono text-[11px] tracking-[0.25em] text-muted uppercase"
+							>Streaming</span
+						>
+						<h3 class="mt-4 font-mono text-xl font-medium text-paper">
+							Make Zara Assist answer live
+						</h3>
+						<p class="mt-4 font-mono text-sm leading-relaxed text-muted">
+							Our goal: take a working Zara chatbot and make the response arrive
+							token by token. The test page detects whether the exercise is still using
+							a full JSON response or has switched to <span class="text-paper">streaming</span>.
+						</p>
+
+						<ul class="mt-6 space-y-3 font-mono text-sm text-muted">
+							<li class="flex gap-3">
+								<span class="text-paper">→</span> Simulate a fashion ecommerce assistant
+							</li>
+							<li class="flex gap-3">
+								<span class="text-paper">→</span> Convert the OpenAI call to streaming
+							</li>
+							<li class="flex gap-3">
+								<span class="text-paper">→</span> Render both modes in the same chat UI
+							</li>
+						</ul>
+
+						<a
+							href="/exercise/02"
+							class="mt-8 inline-flex rounded-full border border-line px-5 py-3 font-mono text-sm text-paper transition hover:bg-ink"
+						>
+							Check chatbot result &rarr;
+						</a>
+					</div>
+
+					<div class="code-frame code-frame-wrap bg-ink">
+						<div class="border-line flex items-center gap-2 border-b px-6 py-4">
+							<span class="h-3 w-3 rounded-full bg-line"></span>
+							<span class="h-3 w-3 rounded-full bg-line"></span>
+							<span class="h-3 w-3 rounded-full bg-line"></span>
+							<span class="ml-2 font-mono text-xs text-muted"
+								>src/exercise/02-zara-chatbot-streaming.ts</span
+							>
+						</div>
+						<Code code={chatbotStreamingExample} lang="md" theme="github-dark" />
+					</div>
+				</div>
+			</section>
+
+			<!-- THIRD EXERCISE -->
+			<section id="exercise-03" class="pt-20">
+				<div class="flex items-baseline justify-between">
+					<h2 class="font-pixel text-2xl text-paper sm:text-3xl">Third exercise</h2>
+					<span class="font-mono text-xs tracking-[0.2em] text-muted uppercase"
+						>Level 02 · Generative AI</span
+					>
+				</div>
+
+				<div class="mt-8 grid gap-px overflow-hidden rounded-2xl border border-line bg-line lg:grid-cols-2">
+					<div class="bg-surface p-8">
+						<span class="font-mono text-[11px] tracking-[0.25em] text-muted uppercase"
+							>GPT Image</span
+						>
+						<h3 class="mt-4 font-mono text-xl font-medium text-paper">
+							Dress a customer with a product photo
+						</h3>
+						<p class="mt-4 font-mono text-sm leading-relaxed text-muted">
+							Our goal: use a fixed Zara garment image and a person uploaded by the user.
+							The exercise sends both images to <span class="text-paper">gpt-image-2</span>
+							and renders a realistic virtual try-on result.
+						</p>
+
+						<ul class="mt-6 space-y-3 font-mono text-sm text-muted">
+							<li class="flex gap-3">
+								<span class="text-paper">→</span> Fetch the Zara garment reference
+							</li>
+							<li class="flex gap-3">
+								<span class="text-paper">→</span> Upload a person image through the test page
+							</li>
+							<li class="flex gap-3">
+								<span class="text-paper">→</span> Generate the try-on with the Images edit API
+							</li>
+						</ul>
+
+						<a
+							href="/exercise/03"
+							class="mt-8 inline-flex rounded-full border border-line px-5 py-3 font-mono text-sm text-paper transition hover:bg-ink"
+						>
+							Check try-on result &rarr;
+						</a>
+					</div>
+
+					<div class="code-frame code-frame-wrap bg-ink">
+						<div class="border-line flex items-center gap-2 border-b px-6 py-4">
+							<span class="h-3 w-3 rounded-full bg-line"></span>
+							<span class="h-3 w-3 rounded-full bg-line"></span>
+							<span class="h-3 w-3 rounded-full bg-line"></span>
+							<span class="ml-2 font-mono text-xs text-muted"
+								>src/exercise/03-virtual-try-on.ts</span
+							>
+						</div>
+						<Code code={virtualTryOnExample} lang="md" theme="github-dark" />
+					</div>
+				</div>
+			</section>
+
+			<!-- FOURTH EXERCISE -->
+			<section id="exercise-04" class="pt-20">
+				<div class="flex items-baseline justify-between">
+					<h2 class="font-pixel text-2xl text-paper sm:text-3xl">Fourth exercise</h2>
+					<span class="font-mono text-xs tracking-[0.2em] text-muted uppercase"
+						>Level 03 · AGENTS.md</span
+					>
+				</div>
+
+				<div class="mt-8 grid gap-px overflow-hidden rounded-2xl border border-line bg-line lg:grid-cols-2">
+					<div class="bg-surface p-8">
+						<span class="font-mono text-[11px] tracking-[0.25em] text-muted uppercase"
+							>Coding style</span
+						>
+						<h3 class="mt-4 font-mono text-xl font-medium text-paper">
+							Teach the agent project naming rules
+						</h3>
+						<p class="mt-4 font-mono text-sm leading-relaxed text-muted">
+							Our goal: add business-oriented coding guidance to
+							<span class="text-paper">AGENTS.md</span>, then ask the agent to rebuild a
+							working file. The check page verifies that the source follows the naming
+							rules and the exported contract still renders correctly.
+						</p>
+
+						<ul class="mt-6 space-y-3 font-mono text-sm text-muted">
+							<li class="flex gap-3">
+								<span class="text-paper">→</span> Define naming guidance in AGENTS.md
+							</li>
+							<li class="flex gap-3">
+								<span class="text-paper">→</span> Recreate the exercise file using those rules
+							</li>
+							<li class="flex gap-3">
+								<span class="text-paper">→</span> Check that source code and page behavior both pass
+							</li>
+						</ul>
+
+						<a
+							href="/exercise/04"
+							class="mt-8 inline-flex rounded-full border border-line px-5 py-3 font-mono text-sm text-paper transition hover:bg-ink"
+						>
+							Check coding guidelines &rarr;
+						</a>
+					</div>
+
+					<div class="code-frame code-frame-wrap bg-ink">
+						<div class="border-line flex items-center gap-2 border-b px-6 py-4">
+							<span class="h-3 w-3 rounded-full bg-line"></span>
+							<span class="h-3 w-3 rounded-full bg-line"></span>
+							<span class="h-3 w-3 rounded-full bg-line"></span>
+							<span class="ml-2 font-mono text-xs text-muted">src/exercise/04-coding-guidelines.ts</span>
+						</div>
+						<Code code={codingGuidelinesExample} lang="md" theme="github-dark" />
+					</div>
+				</div>
+			</section>
+
+			<!-- FIFTH EXERCISE -->
+			<section id="exercise-05" class="pt-20">
+				<div class="flex items-baseline justify-between">
+					<h2 class="font-pixel text-2xl text-paper sm:text-3xl">Fifth exercise</h2>
+					<span class="font-mono text-xs tracking-[0.2em] text-muted uppercase"
+						>Level 03 · Agent Skills</span
+					>
+				</div>
+
+				<div class="mt-8 grid gap-px overflow-hidden rounded-2xl border border-line bg-line lg:grid-cols-2">
+					<div class="bg-surface p-8">
+						<span class="font-mono text-[11px] tracking-[0.25em] text-muted uppercase"
+							>skills.sh + autoskills</span
+						>
+						<h3 class="mt-4 font-mono text-xl font-medium text-paper">
+							Use a Web Quality Skill to improve Lighthouse
+						</h3>
+						<p class="mt-4 font-mono text-sm leading-relaxed text-muted">
+							Our goal: install a reusable Agent Skill, let it guide the agent through a
+							performance audit and compare <span class="text-paper">before / after</span>
+							scores in Lighthouse. The page starts deliberately rough so the improvement is visible.
+						</p>
+
+						<ul class="mt-6 space-y-3 font-mono text-sm text-muted">
+							<li class="flex gap-3">
+								<span class="text-paper">→</span> Learn what Vercel skills.sh provides
+							</li>
+							<li class="flex gap-3">
+								<span class="text-paper">→</span> Try autoskills or install a specific skill
+							</li>
+							<li class="flex gap-3">
+								<span class="text-paper">→</span> Optimize a slow campaign page with Lighthouse
+							</li>
+						</ul>
+
+						<a
+							href="/exercise/05"
+							class="mt-8 inline-flex rounded-full border border-line px-5 py-3 font-mono text-sm text-paper transition hover:bg-ink"
+						>
+							Check Agent Skills exercise &rarr;
+						</a>
+					</div>
+
+					<div class="code-frame code-frame-wrap bg-ink">
+						<div class="border-line flex items-center gap-2 border-b px-6 py-4">
+							<span class="h-3 w-3 rounded-full bg-line"></span>
+							<span class="h-3 w-3 rounded-full bg-line"></span>
+							<span class="h-3 w-3 rounded-full bg-line"></span>
+							<span class="ml-2 font-mono text-xs text-muted">src/pages/exercise/05.astro</span>
+						</div>
+						<Code code={agentSkillsExample} lang="md" theme="github-dark" />
+					</div>
+				</div>
+			</section>
+
+			<!-- AGENDA -->
+			<section id="agenda" class="pt-20">
+				<h2 class="font-pixel text-2xl text-paper sm:text-3xl">Agenda</h2>
+				<div class="mt-8 overflow-hidden rounded-2xl border border-line">
+					{
+						agenda.map((row, i) => (
+							<div
+								class={`flex flex-col gap-1 px-6 py-4 sm:flex-row sm:items-center sm:gap-6 ${
+									i % 2 === 0 ? "bg-surface" : "bg-surface-2"
+								}`}
+							>
+								<span class="font-pixel w-16 shrink-0 text-paper">{row.time}</span>
+								<span class="flex-1 font-mono text-sm text-paper">{row.section}</span>
+								<span class="font-mono text-xs tracking-[0.15em] text-muted uppercase">
+									{row.format}
+								</span>
+							</div>
+						))
+					}
+				</div>
+			</section>
+
+			<!-- GETTING STARTED -->
+			<section id="start" class="pt-20">
+				<h2 class="font-pixel text-2xl text-paper sm:text-3xl">Get started</h2>
+				<p class="mt-4 max-w-2xl font-mono text-sm leading-relaxed text-muted">
+					Clone the repo, install Node.js and pnpm, then run the dev server. Full
+					instructions are in the <span class="text-paper">README</span>.
+				</p>
+				<div class="code-frame mt-8 overflow-hidden rounded-2xl border border-line bg-surface">
+					<div class="border-line flex items-center gap-2 border-b px-6 py-4">
+						<span class="h-3 w-3 rounded-full bg-line"></span>
+						<span class="h-3 w-3 rounded-full bg-line"></span>
+						<span class="h-3 w-3 rounded-full bg-line"></span>
+						<span class="ml-2 font-mono text-xs text-muted">terminal</span>
+					</div>
+					<Code code={setupCommands} lang="shell" theme="github-dark" />
+				</div>
+			</section>
+		</main>
+
+		<footer class="border-line border-t">
+			<div
+				class="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-6 py-8 sm:flex-row"
+			>
+				<div class="flex items-center gap-3">
+					<img src="/logo.svg" alt="Zara" width="60" height="25" class="h-5 w-auto" />
+					<span class="font-mono text-xs tracking-[0.2em] text-muted uppercase">Boost</span>
+				</div>
+				<span class="font-mono text-xs text-muted">
+					AI for Developers Workshop · built live by midudev
+				</span>
+			</div>
+		</footer>
+	</div>
 </Layout>

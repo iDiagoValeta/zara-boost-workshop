@@ -1,0 +1,56 @@
+---
+interface NavTarget {
+	href: string;
+	label: string;
+}
+
+interface Props {
+	prev?: NavTarget;
+	next?: NavTarget;
+}
+
+const home: NavTarget = { href: "/", label: "All exercises" };
+const { prev, next } = Astro.props;
+
+const previous = prev ?? home;
+const upcoming = next ?? home;
+
+const previousEyebrow = prev ? "Previous" : "Overview";
+const upcomingEyebrow = next ? "Next" : "Overview";
+---
+
+<footer class="border-line border-t">
+	<nav
+		aria-label="Exercise navigation"
+		class="border-line bg-line mx-auto grid max-w-6xl grid-cols-1 gap-px overflow-hidden border-x border-b sm:grid-cols-2"
+	>
+		<a
+			href={previous.href}
+			class="bg-surface hover:bg-surface-2 group flex items-center gap-4 px-6 py-8 transition sm:px-8"
+		>
+			<span class="font-pixel text-3xl leading-none text-muted transition group-hover:text-paper">
+				&larr;
+			</span>
+			<span class="flex flex-col">
+				<span class="font-mono text-xs tracking-[0.24em] text-muted uppercase">
+					{previousEyebrow}
+				</span>
+				<span class="mt-1 font-mono text-sm text-paper">{previous.label}</span>
+			</span>
+		</a>
+		<a
+			href={upcoming.href}
+			class="bg-surface hover:bg-surface-2 group flex items-center justify-end gap-4 px-6 py-8 text-right transition sm:px-8"
+		>
+			<span class="flex flex-col">
+				<span class="font-mono text-xs tracking-[0.24em] text-muted uppercase">
+					{upcomingEyebrow}
+				</span>
+				<span class="mt-1 font-mono text-sm text-paper">{upcoming.label}</span>
+			</span>
+			<span class="font-pixel text-3xl leading-none text-muted transition group-hover:text-paper">
+				&rarr;
+			</span>
+		</a>
+	</nav>
+</footer>

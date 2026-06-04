@@ -1,0 +1,182 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family: "Geist Pixel";
+  src: url("/fonts/GeistPixel-Square.woff2") format("woff2");
+  font-weight: 400 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Geist Pixel Grid";
+  src: url("/fonts/GeistPixel-Grid.woff2") format("woff2");
+  font-weight: 400 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Geist Mono";
+  src: url("/fonts/GeistMono-Variable.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@theme {
+  --font-pixel: "Geist Pixel", ui-monospace, monospace;
+  --font-pixel-grid: "Geist Pixel Grid", ui-monospace, monospace;
+  --font-mono: "Geist Mono", ui-monospace, "Cascadia Code", monospace;
+
+  --color-ink: #050505;
+  --color-surface: #0c0c0d;
+  --color-surface-2: #131315;
+  --color-line: #232326;
+  --color-muted: #8a8a90;
+  --color-paper: #f5f5f5;
+  --color-accent: #ffffff;
+}
+
+:root {
+  color-scheme: dark;
+}
+
+html,
+body {
+  margin: 0;
+  width: 100%;
+  min-height: 100%;
+  background-color: var(--color-ink);
+  color: var(--color-paper);
+  font-family: var(--font-mono);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: #ffffff;
+  color: #050505;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+.code-frame .astro-code {
+  margin: 0;
+  overflow-x: auto;
+  background: transparent !important;
+  padding: 1.5rem;
+  font-family: var(--font-mono) !important;
+  font-size: 0.8125rem;
+  line-height: 1.7;
+}
+
+.code-frame-wrap .astro-code {
+  overflow-x: hidden;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  text-wrap: wrap;
+}
+
+.code-frame .astro-code code,
+.code-frame .astro-code span {
+  font-family: inherit !important;
+}
+
+.level-card-accent {
+  color: var(--level-accent);
+}
+
+.level-card-muted {
+  color: var(--level-muted);
+}
+
+.exercise-status-success {
+  border-color: rgba(74, 222, 128, 0.5);
+  background: rgba(5, 46, 22, 0.35);
+  color: #86efac;
+}
+
+.exercise-status-error {
+  border-color: rgba(248, 113, 113, 0.5);
+  background: rgba(69, 10, 10, 0.3);
+  color: #fca5a5;
+}
+
+.exercise-status-success img,
+.exercise-status-error img {
+  width: 1.25rem;
+  height: 1.25rem;
+  flex: 0 0 auto;
+}
+
+.chat-typing-cursor::after {
+  content: "";
+  display: inline-block;
+  width: 0.48rem;
+  height: 0.48rem;
+  margin-left: 0.28rem;
+  border-radius: 999px;
+  background: currentColor;
+  opacity: 0.78;
+  transform: translateY(0.04rem);
+  animation: chat-cursor-pulse 1.15s ease-in-out infinite;
+}
+
+.try-on-skeleton {
+  position: relative;
+  overflow: hidden;
+  background: var(--color-surface-2);
+  animation: try-on-skeleton-sweep 1.8s ease-in-out infinite;
+}
+
+.try-on-skeleton::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(110deg, transparent 0 38%, rgba(255, 255, 255, 0.08) 48%, transparent 58% 100%);
+  transform: translateX(-100%);
+  animation: try-on-skeleton-shimmer 1.35s ease-in-out infinite;
+}
+
+@keyframes chat-cursor-pulse {
+  0%,
+  100% {
+    opacity: 0.28;
+    transform: translateY(0.04rem) scale(0.82);
+  }
+
+  50% {
+    opacity: 0.9;
+    transform: translateY(0.04rem) scale(1);
+  }
+}
+
+@keyframes try-on-skeleton-sweep {
+  0%,
+  100% {
+    opacity: 0.72;
+  }
+
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes try-on-skeleton-shimmer {
+  to {
+    transform: translateX(100%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chat-typing-cursor::after,
+  .try-on-skeleton,
+  .try-on-skeleton::after {
+    animation: none;
+  }
+}
