@@ -45,37 +45,50 @@ server.registerTool(
 server.registerTool(
   "get_product",
   {
-    title: "TODO",
-    description: "TODO",
+    title: "Get Zara product",
+    description: "Recover one product by id, slug or normalized reference.",
     inputSchema: {
-      todo: z.string()
+      id: z.string(),
     },
   },
-  async ({ id }: { id: string }) => {
-    createJsonResponse({
-      todo: "TODO 1: import getProductById and return either { product } or an MCP error result.",
-    }),
+  async ({ id }) => {
+    const product = getProductById(id);
+
+    if (!product) {
+      return {
+        ...createJsonResponse({ error: `Product not found: ${id}` }),
+        isError: true,
+      };
+    }
+
+    return createJsonResponse({ product });
+  },
 );
 
 server.registerTool(
   "search_products",
   {
-    title: "TODO",
-    description: "TODO",
+    title: "Search Zara products",
+    description: "Search by text, category, material, color and price range.",
     inputSchema: {
-      todo: z.string()
+      query: z.string().optional(),
+      category: z.string().optional(),
+      material: z.string().optional(),
+      color: z.string().optional(),
+      minPrice: z.number().optional(),
+      maxPrice: z.number().optional(),
+      limit: z.number().int().min(1).max(50).optional(),
     },
   },
-  async ({ limit, ...filters }: ProductSearchFilters & { limit?: number }) => {
-    // const products = searchProducts(...)
-    const products = []
+  async ({ limit = 12, ...filters }: ProductSearchFilters & { limit?: number }) => {
+    const products = searchProducts(filters).slice(0, limit);
 
     return createJsonResponse({
       count: products.length,
       filters,
       products,
     });
-  }
+  },
 );
 
 // DO NO TOUCH THIS CODE

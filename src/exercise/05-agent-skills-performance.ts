@@ -97,46 +97,46 @@ export const optimizationHints = [
   "Keep the same visual story while reducing bytes and layout instability.",
 ];
 
-const slowImageBase =
-  "https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&q=95&w=2400";
+const heroImageBase =
+  "https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&q=70&w=1024";
 
 export const performanceExperiment: PerformanceExperiment = {
-  state: "baseline",
-  statusLabel: "Before · intentionally slow",
+  state: "optimized",
+  statusLabel: "After · optimized",
   hero: {
-    src: `${slowImageBase}&ixlib=rb-4.1.0`,
+    src: `${heroImageBase}&ixlib=rb-4.1.0`,
     alt: "Editorial fashion campaign with layered neutral garments",
-    caption: "Oversized hero image, no dimensions and no preload yet.",
-    width: 2400,
-    height: 3000,
+    caption: "Constrained hero image with explicit dimensions and priority load.",
+    width: 1024,
+    height: 1280,
   },
   gallery: [
     {
-      src: "https://images.unsplash.com/photo-1496747611176-843222e1e57c?auto=format&fit=crop&q=95&w=2200",
+      src: "https://images.unsplash.com/photo-1496747611176-843222e1e57c?auto=format&fit=crop&q=70&w=800",
       alt: "Studio model wearing a long coat",
-      caption: "Eager image below the fold.",
-      width: 2200,
-      height: 2750,
+      caption: "Lazy-loaded image below the fold.",
+      width: 800,
+      height: 1000,
     },
     {
-      src: "https://images.unsplash.com/photo-1509631179647-0177331693ae?auto=format&fit=crop&q=95&w=2200",
+      src: "https://images.unsplash.com/photo-1509631179647-0177331693ae?auto=format&fit=crop&q=70&w=800",
       alt: "Monochrome editorial outfit",
-      caption: "No explicit dimensions in the starter.",
-      width: 2200,
-      height: 2750,
+      caption: "Explicit dimensions avoid layout shifts.",
+      width: 800,
+      height: 1000,
     },
     {
-      src: "https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&q=95&w=2200",
+      src: "https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&q=70&w=800",
       alt: "Fashion retail shopping street",
-      caption: "Large remote asset loaded too early.",
-      width: 2200,
-      height: 1467,
+      caption: "Constrained remote asset, lazy-loaded.",
+      width: 800,
+      height: 533,
     },
   ],
-  busyWorkMs: 950,
-  duplicateMarqueeItems: 48,
-  renderInvisiblePanels: true,
-  missingImageDimensions: true,
-  useLazyLoading: false,
-  preloadHero: false,
+  busyWorkMs: 0,
+  duplicateMarqueeItems: 12,
+  renderInvisiblePanels: false,
+  missingImageDimensions: false,
+  useLazyLoading: true,
+  preloadHero: true,
 };

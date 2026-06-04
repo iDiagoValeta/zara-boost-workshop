@@ -66,7 +66,16 @@ export const generateVirtualTryOn = async ({ personImage, notes = "" }: TryOnInp
   // - Keep the person's identity, pose, body shape and background.
   // - Replace only the relevant upper-body garment.
   // - Use customer notes only as fit/styling context.
-  const prompt = "";
+  const prompt = [
+    "Virtual try-on edit.",
+    "The first image is the person; the second image is the Zara garment reference.",
+    "Dress the person in the garment from the second image. Keep the whole outfit consistent with the garment's color, material and fit, and make it look natural on the person.",
+    "Keep the person's identity, face, pose, body shape and the original background unchanged.",
+    "Replace only the relevant upper-body garment, matching the garment's color, material and fit naturally to the body and lighting.",
+    notes ? `Use these customer notes only as fit/styling context: ${notes}` : "",
+  ]
+    .filter(Boolean)
+    .join(" ");
 
   // TODO 2:
   // Call the OpenAI Images edit API with:
@@ -76,8 +85,9 @@ export const generateVirtualTryOn = async ({ personImage, notes = "" }: TryOnInp
   // - a square preview-friendly size
   const response = await openai.images.edit({
     model: "gpt-image-1.5",
-    image: [],
+    image: [personImage, garmentImage],
     prompt,
+    size: "1024x1024",
   });
 
   // TODO 3:

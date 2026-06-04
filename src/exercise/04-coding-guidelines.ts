@@ -31,7 +31,7 @@ export type DisplaySummary = {
   pills: string[];
 };
 
-const zaraCatalogo: ProductHighlight[] = [
+const productCatalog: ProductHighlight[] = [
   {
     id: "linen-overshirt-001",
     name: "Linen Blend Overshirt",
@@ -43,7 +43,7 @@ const zaraCatalogo: ProductHighlight[] = [
   },
 ];
 
-const descuentoTemporada = 1500;
+const seasonalDiscount = 1500;
 
 export const formatPrice = (priceInCents: number) =>
   new Intl.NumberFormat("en", {
@@ -51,29 +51,29 @@ export const formatPrice = (priceInCents: number) =>
     currency: "EUR",
   }).format(priceInCents / 100);
 
-const obtenerProductoPrincipal = () => zaraCatalogo[0];
+const getFeaturedProduct = () => productCatalog[0];
 
-const calcularPrecioFinal = (precioOriginal: number) =>
-  Math.max(precioOriginal - descuentoTemporada, 0);
+const calculateFinalPrice = (originalPrice: number) =>
+  Math.max(originalPrice - seasonalDiscount, 0);
 
 export const getDisplaySummary = (): DisplaySummary => {
-  const productoDestacado = obtenerProductoPrincipal();
-  const precioFinal = calcularPrecioFinal(productoDestacado.originalPriceInCents);
-  const tallasDisponibles = productoDestacado.availableSizes;
+  const featuredProduct = getFeaturedProduct();
+  const finalPrice = calculateFinalPrice(featuredProduct.originalPriceInCents);
+  const availableSizes = featuredProduct.availableSizes;
 
   return {
     title: "Agent coding guidelines",
     description:
       "Use AGENTS.md to teach the agent how business code should be named before asking it to rebuild a file.",
     product: {
-      ...productoDestacado,
-      priceInCents: precioFinal,
-      formattedPrice: formatPrice(precioFinal),
-      savingsLabel: `${formatPrice(descuentoTemporada)} off`,
+      ...featuredProduct,
+      priceInCents: finalPrice,
+      formattedPrice: formatPrice(finalPrice),
+      savingsLabel: `${formatPrice(seasonalDiscount)} off`,
     },
     pills: [
-      `${tallasDisponibles.length} sizes available`,
-      `${productoDestacado.color} colorway`,
+      `${availableSizes.length} sizes available`,
+      `${featuredProduct.color} colorway`,
       "AGENTS.md enforced",
     ],
   };

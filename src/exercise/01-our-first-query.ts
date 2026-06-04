@@ -48,7 +48,15 @@ export const getAssistantMessage = async () => {
   // - No exaggerated claims.
   // - Return only JSON with this shape:
   //   { "copies": [{ "locale": "en", "title": "...", "shortDescription": "...", "tags": ["..."] }] }
-  const systemPrompt = "";
+  const systemPrompt = [
+    "You are a fashion ecommerce copywriter for Zara.",
+    "You translate and adapt product copy for the requested locales.",
+    "Keep the tone factual: no exaggerated or unverifiable claims.",
+    "Respect every constraint in the user payload (max words and tag count).",
+    "Return ONLY valid JSON, with no markdown or code fences, using this exact shape:",
+    '{ "copies": [{ "locale": "en", "title": "...", "shortDescription": "...", "tags": ["..."] }] }',
+    "Include one entry per requested locale.",
+  ].join(" ");
 
   // TODO 2:
   // Create the user payload with the product, targetLocales and constraints.
@@ -56,7 +64,15 @@ export const getAssistantMessage = async () => {
   // - titleMaxWords: 6
   // - descriptionMaxWords: 24
   // - tagCount: 4
-  const userPayload = {};
+  const userPayload = {
+    product,
+    targetLocales,
+    constraints: {
+      titleMaxWords: 6,
+      descriptionMaxWords: 24,
+      tagCount: 4,
+    },
+  };
 
   const OPENAI_API_KEY = import.meta.env.OPENAI_API_KEY;
 
@@ -72,9 +88,10 @@ export const getAssistantMessage = async () => {
   // Make the OpenAI API call.
   const response = await openai.chat.completions.create({
     model: "gpt-5.4-mini",
-    // response_format: { type: "????" },
+    response_format: { type: "json_object" },
     messages: [
-      // ???
+      { role: "system", content: systemPrompt },
+      { role: "user", content: JSON.stringify(userPayload) },
     ],
   });
 

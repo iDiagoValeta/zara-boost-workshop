@@ -51,6 +51,7 @@ export const getZaraChatbotResponse = async (messages: ZaraChatMessage[]) => {
   // The endpoint and the test page are already prepared to detect both modes.
   const response = await openai.chat.completions.create({
     model: "gpt-5.4-mini",
+    stream: true,
     messages: [
       {
         role: "system",

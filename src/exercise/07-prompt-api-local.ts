@@ -191,14 +191,30 @@ export const getLocalZaraResponse = async (
   // prompt and the previous turns as `initialPrompts`, and forward the download
   // progress through the `monitor` callback:
   //
+  const session = await LanguageModel.create({
+    initialPrompts: [
+      { role: "system", content: systemPrompt },
+      ...history.map((message) => ({
+        role: message.role,
+        content: message.content,
+      })),
+    ],
+    monitor(monitor) {
+      if (onDownloadProgress) {
+        monitor.addEventListener("downloadprogress", onDownloadProgress);
+      }
+    },
+  });
 
   // TODO 2:
   // Ask the model and return its answer:
   //
   //   const fullAnswer = await ????
   //   return fullAnswer;
-
-  throw new Error(
-    "Not implemented yet. Complete the TODOs in src/exercise/07-prompt-api-local.ts",
-  );
+  try {
+    const fullAnswer = await session.prompt(lastUserMessage);
+    return fullAnswer;
+  } finally {
+    session.destroy();
+  }
 };
