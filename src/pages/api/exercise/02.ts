@@ -2,7 +2,7 @@ import type { APIRoute } from "astro";
 import {
   getZaraChatbotResponse,
   type ZaraChatMessage,
-} from "../../../exercise/02-zara-chatbot-streaming.solution";
+} from "../../../exercise/02-zara-chatbot-streaming";
 
 type ChatCompletionLike = {
   choices?: Array<{

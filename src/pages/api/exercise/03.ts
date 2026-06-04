@@ -1,5 +1,5 @@
 import type { APIRoute } from "astro";
-import { generateVirtualTryOn } from "../../../exercise/03-virtual-try-on.solution";
+import { generateVirtualTryOn } from "../../../exercise/03-virtual-try-on";
 
 export const prerender = false;
 

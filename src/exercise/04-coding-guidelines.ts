@@ -1,8 +1,13 @@
 // Exercise 04: Coding guidelines with AGENTS.md
 //
-// Reference solution:
-// This keeps the exported API stable while replacing starter identifiers with
-// English, brand-neutral names.
+// Challenge:
+// 1. Add a coding style section to AGENTS.md.
+// 2. Ask the agent to recreate this file while keeping the exported API stable.
+// 3. Run the check page at /exercise/04.
+//
+// Goal:
+// The page should keep rendering the same product summary, but this source file
+// should stop using brand names or Spanish words in identifiers.
 
 export type ProductHighlight = {
   id: string;
@@ -26,7 +31,7 @@ export type DisplaySummary = {
   pills: string[];
 };
 
-const productCatalog: ProductHighlight[] = [
+const zaraCatalogo: ProductHighlight[] = [
   {
     id: "linen-overshirt-001",
     name: "Linen Blend Overshirt",
@@ -38,7 +43,7 @@ const productCatalog: ProductHighlight[] = [
   },
 ];
 
-const seasonalDiscountInCents = 1500;
+const descuentoTemporada = 1500;
 
 export const formatPrice = (priceInCents: number) =>
   new Intl.NumberFormat("en", {
@@ -46,29 +51,29 @@ export const formatPrice = (priceInCents: number) =>
     currency: "EUR",
   }).format(priceInCents / 100);
 
-const getFeaturedProduct = () => productCatalog[0];
+const obtenerProductoPrincipal = () => zaraCatalogo[0];
 
-const getFinalPrice = (originalPriceInCents: number) =>
-  Math.max(originalPriceInCents - seasonalDiscountInCents, 0);
+const calcularPrecioFinal = (precioOriginal: number) =>
+  Math.max(precioOriginal - descuentoTemporada, 0);
 
 export const getDisplaySummary = (): DisplaySummary => {
-  const featuredProduct = getFeaturedProduct();
-  const finalPriceInCents = getFinalPrice(featuredProduct.originalPriceInCents);
-  const availableSizes = featuredProduct.availableSizes;
+  const productoDestacado = obtenerProductoPrincipal();
+  const precioFinal = calcularPrecioFinal(productoDestacado.originalPriceInCents);
+  const tallasDisponibles = productoDestacado.availableSizes;
 
   return {
     title: "Agent coding guidelines",
     description:
       "Use AGENTS.md to teach the agent how business code should be named before asking it to rebuild a file.",
     product: {
-      ...featuredProduct,
-      priceInCents: finalPriceInCents,
-      formattedPrice: formatPrice(finalPriceInCents),
-      savingsLabel: `${formatPrice(seasonalDiscountInCents)} off`,
+      ...productoDestacado,
+      priceInCents: precioFinal,
+      formattedPrice: formatPrice(precioFinal),
+      savingsLabel: `${formatPrice(descuentoTemporada)} off`,
     },
     pills: [
-      `${availableSizes.length} sizes available`,
-      `${featuredProduct.color} colorway`,
+      `${tallasDisponibles.length} sizes available`,
+      `${productoDestacado.color} colorway`,
       "AGENTS.md enforced",
     ],
   };
