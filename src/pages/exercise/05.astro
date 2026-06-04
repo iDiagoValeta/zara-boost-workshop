@@ -1,0 +1,371 @@
+---
+import { Code } from "astro:components";
+import badgeCheckIcon from "../../assets/badge-check.svg";
+import errorIcon from "../../assets/octagon-times-solid.svg";
+import ExerciseNav from "../../components/ExerciseNav.astro";
+import {
+	agentPrompt,
+	installOptions,
+	optimizationHints,
+	performanceExperiment,
+	skillsBriefing,
+} from "../../exercise/05-agent-skills-performance";
+import Layout from "../../layouts/Layout.astro";
+
+const badgeCheckIconSrc =
+	typeof badgeCheckIcon === "string" ? badgeCheckIcon : badgeCheckIcon.src;
+const errorIconSrc = typeof errorIcon === "string" ? errorIcon : errorIcon.src;
+
+const getImageDimensions = (image: { width: number; height: number }) =>
+	performanceExperiment.missingImageDimensions
+		? {}
+		: {
+				width: image.width,
+				height: image.height,
+			};
+
+const marqueeItems = Array.from(
+	{ length: performanceExperiment.duplicateMarqueeItems },
+	(_, index) => ["Lighthouse", "Skills", "Core Web Vitals", "Performance"][index % 4],
+);
+
+const hiddenPanels = Array.from({ length: 120 }, (_, index) => `hidden-panel-${index + 1}`);
+
+const installCommands = installOptions
+	.map((option) => `# ${option.label}\n${option.command}`)
+	.join("\n\n");
+
+const lighthouseSteps = `# 1. Start the project
+pnpm dev
+
+# 2. Open the target page
+http://localhost:4321/exercise/05
+
+# 3. Run Lighthouse before and after
+# Chrome DevTools > Lighthouse > Analyze page load`;
+---
+
+<Layout
+	title="Exercise 05 · Agent Skills Performance Audit"
+	description="Install a Web Quality Agent Skill, use it to audit a deliberately slow page and compare Lighthouse before and after."
+>
+	<div
+		id="audit-target"
+		data-busy-work-ms={performanceExperiment.busyWorkMs}
+		class="relative min-h-screen overflow-hidden"
+	>
+		<div
+			class="pointer-events-none absolute inset-0 -z-10 opacity-[0.04]"
+			style="background-image:linear-gradient(var(--color-line) 1px,transparent 1px),linear-gradient(90deg,var(--color-line) 1px,transparent 1px);background-size:64px 64px;"
+		>
+		</div>
+
+		<header class="mx-auto flex max-w-6xl items-center justify-between px-6 py-6">
+			<a href="/" class="flex items-center gap-3">
+				<img src="/logo.svg" alt="Zara" width="74" height="31" class="h-6 w-auto" />
+				<span class="text-line text-2xl leading-none">/</span>
+				<span class="font-mono text-xs tracking-[0.35em] text-muted uppercase">Boost</span>
+			</a>
+			<a
+				href="/"
+				class="border-line rounded-full border px-4 py-2 font-mono text-xs tracking-[0.16em] text-muted uppercase transition hover:bg-surface-2 hover:text-paper"
+			>
+				Back
+			</a>
+		</header>
+
+		<main class="mx-auto max-w-6xl px-6 pb-24">
+			<section class="border-line border-y py-14 sm:py-20">
+				<p class="font-mono text-xs tracking-[0.24em] text-muted uppercase">Exercise 05</p>
+				<h1 class="font-pixel mt-5 text-4xl leading-none text-paper sm:text-6xl">
+					Agent Skills<br />Performance Audit
+				</h1>
+				<p class="mt-6 max-w-2xl font-mono text-sm leading-relaxed text-muted sm:text-base">
+					Install a Web Quality Agent Skill, ask the agent to use it and optimize this
+					deliberately rough page. The goal is to compare a visible Lighthouse
+					<span class="text-paper">before</span> and <span class="text-paper">after</span>.
+				</p>
+				<div class="mt-8 flex flex-wrap gap-3">
+					<span class="rounded-full border border-red-300/40 bg-red-950/20 px-4 py-2 font-mono text-xs text-red-100">
+						{performanceExperiment.statusLabel}
+					</span>
+					<span class="rounded-full border border-line bg-surface px-4 py-2 font-mono text-xs text-muted">
+						Target after: Lighthouse Performance 90+
+					</span>
+				</div>
+			</section>
+
+			<section class="grid gap-px overflow-hidden rounded-2xl border border-line bg-line lg:grid-cols-3 mt-10">
+				{
+					skillsBriefing.map((item) => (
+						<article class="bg-surface p-6 sm:p-8">
+							<p class="font-mono text-xs tracking-[0.24em] text-muted uppercase">Briefing</p>
+							<h2 class="mt-4 font-mono text-xl font-medium text-paper">{item.title}</h2>
+							<p class="mt-4 font-mono text-sm leading-relaxed text-muted">{item.description}</p>
+							<a
+								href={item.url}
+								target="_blank"
+								rel="noreferrer"
+								class="mt-5 inline-flex rounded-full border border-line px-4 py-2 font-mono text-xs text-paper transition hover:bg-ink"
+							>
+								Open resource &rarr;
+							</a>
+						</article>
+					))
+				}
+			</section>
+
+			<section class="mt-10 grid gap-px overflow-hidden rounded-2xl border border-line bg-line lg:grid-cols-[0.9fr_1.1fr]">
+				<article class="bg-surface p-6 sm:p-8">
+					<p class="font-mono text-xs tracking-[0.24em] text-muted uppercase">Challenge</p>
+					<h2 class="mt-4 font-mono text-xl font-medium text-paper">
+						Install one skill, then improve this page
+					</h2>
+					<p class="mt-4 font-mono text-sm leading-relaxed text-muted">
+						The page below has common Lighthouse problems: large images, eager loading,
+						main-thread work, missing dimensions and extra DOM. First capture the baseline,
+						then install a skill from <span class="text-paper">addyosmani/web-quality-skills</span>
+						and ask the agent to fix it.
+					</p>
+
+					<div class="mt-6 rounded-2xl border border-line bg-ink p-5">
+						<p class="font-mono text-xs tracking-[0.2em] text-muted uppercase">What to improve</p>
+						<ul class="mt-4 space-y-3 font-mono text-sm text-muted">
+							{
+								optimizationHints.map((hint) => (
+									<li class="flex gap-3">
+										<span class="text-paper">→</span> {hint}
+									</li>
+								))
+							}
+						</ul>
+					</div>
+
+					<button
+						id="run-check"
+						class="mt-6 bg-paper rounded-full px-5 py-3 font-mono text-sm font-medium text-ink transition hover:opacity-80"
+					>
+						Check obvious anti-patterns
+					</button>
+					<div
+						id="status"
+						data-error-icon={errorIconSrc}
+						data-success-icon={badgeCheckIconSrc}
+						class="mt-5 rounded-2xl border border-line bg-ink p-5 font-mono text-sm text-muted"
+					>
+						Ready. Lighthouse is the real score, this check only looks for starter anti-patterns.
+					</div>
+				</article>
+
+				<section class="code-frame bg-ink">
+					<div class="border-line flex items-center gap-2 border-b px-6 py-4">
+						<span class="h-3 w-3 rounded-full bg-line"></span>
+						<span class="h-3 w-3 rounded-full bg-line"></span>
+						<span class="h-3 w-3 rounded-full bg-line"></span>
+						<span class="ml-2 font-mono text-xs text-muted">install + run</span>
+					</div>
+					<Code code={installCommands} lang="shell" theme="github-dark" />
+					<div class="border-line border-y px-6 py-4">
+						<p class="font-mono text-xs tracking-[0.2em] text-muted uppercase">Lighthouse flow</p>
+					</div>
+					<Code code={lighthouseSteps} lang="shell" theme="github-dark" />
+				</section>
+			</section>
+
+			<section class="code-frame mt-10 overflow-hidden rounded-2xl border border-line bg-ink">
+				<div class="border-line flex items-center gap-2 border-b px-6 py-4">
+					<span class="h-3 w-3 rounded-full bg-line"></span>
+					<span class="h-3 w-3 rounded-full bg-line"></span>
+					<span class="h-3 w-3 rounded-full bg-line"></span>
+					<span class="ml-2 font-mono text-xs text-muted">prompt for the agent</span>
+				</div>
+				<Code code={agentPrompt} lang="md" theme="github-dark" />
+			</section>
+
+			<section class="mt-16 overflow-hidden rounded-[2rem] border border-line bg-surface">
+				<div class="grid gap-px bg-line lg:grid-cols-[1.1fr_0.9fr]">
+					<article class="bg-surface p-6 sm:p-10">
+						<p class="font-mono text-xs tracking-[0.24em] text-muted uppercase">
+							Lighthouse target page
+						</p>
+						<h2 class="font-pixel mt-5 text-4xl leading-none text-paper sm:text-6xl">
+							Spring<br />Capsule Drop
+						</h2>
+						<p class="mt-6 max-w-xl font-mono text-sm leading-relaxed text-muted sm:text-base">
+							A deliberately expensive editorial landing. It is useful for the workshop
+							because the installed skill has concrete issues to find and fix.
+						</p>
+						<div class="mt-8 overflow-hidden rounded-full border border-line bg-ink">
+							<div class="flex min-w-max gap-8 px-6 py-3 font-mono text-xs tracking-[0.18em] text-muted uppercase">
+								{marqueeItems.map((item) => <span>{item}</span>)}
+							</div>
+						</div>
+					</article>
+
+					<figure class="bg-ink p-4 sm:p-6">
+						<img
+							src={performanceExperiment.hero.src}
+							alt={performanceExperiment.hero.alt}
+							loading="eager"
+							decoding="async"
+							fetchpriority={performanceExperiment.preloadHero ? "high" : "auto"}
+							class="aspect-[4/5] w-full rounded-[1.5rem] border border-line object-cover"
+							{...getImageDimensions(performanceExperiment.hero)}
+						/>
+						<figcaption class="mt-3 font-mono text-xs leading-relaxed text-muted">
+							{performanceExperiment.hero.caption}
+						</figcaption>
+					</figure>
+				</div>
+
+				<div class="grid gap-px bg-line md:grid-cols-3">
+					{
+						performanceExperiment.gallery.map((image) => (
+							<figure class="bg-surface p-4">
+								<img
+									src={image.src}
+									alt={image.alt}
+									loading={performanceExperiment.useLazyLoading ? "lazy" : "eager"}
+									decoding="async"
+									class="aspect-[4/5] w-full rounded-2xl border border-line object-cover"
+									{...getImageDimensions(image)}
+								/>
+								<figcaption class="mt-3 font-mono text-xs leading-relaxed text-muted">
+									{image.caption}
+								</figcaption>
+							</figure>
+						))
+					}
+				</div>
+
+				{
+					performanceExperiment.renderInvisiblePanels && (
+						<div class="absolute left-[-9999px] top-auto grid w-[960px] grid-cols-4 gap-2" aria-hidden="true">
+							{hiddenPanels.map((panel) => (
+								<article class="rounded-xl border border-line bg-surface p-4">
+									<h3 class="font-mono text-sm text-paper">{panel}</h3>
+									<p class="mt-2 font-mono text-xs text-muted">
+										This invisible panel exists only to make the starter page heavier.
+									</p>
+								</article>
+							))}
+						</div>
+					)
+				}
+			</section>
+		</main>
+
+		<ExerciseNav prev={{ href: "/exercise/04", label: "AGENTS.md Coding Rules" }} />
+	</div>
+
+	{
+		performanceExperiment.busyWorkMs > 0 && (
+			<script is:inline>
+				const auditTarget = document.querySelector("#audit-target");
+				const busyWorkMs = Number(auditTarget?.getAttribute("data-busy-work-ms") ?? "0");
+				const startedAt = performance.now();
+				let checksum = 0;
+
+				while (performance.now() - startedAt < busyWorkMs) {
+					checksum += Math.sqrt(Math.random() * 1000);
+				}
+
+				window.__exercise05Checksum = checksum;
+			</script>
+		)
+	}
+
+	<script>
+		type CheckViolation = {
+			label: string;
+			message: string;
+		};
+
+		type CheckResponse = {
+			passed?: boolean;
+			violations?: CheckViolation[];
+			error?: string;
+		};
+
+		const button = document.querySelector<HTMLButtonElement>("#run-check");
+		const status = document.querySelector<HTMLElement>("#status");
+
+		const createStatusIcon = (src: string) => {
+			const img = document.createElement("img");
+			img.src = src;
+			img.alt = "";
+			img.setAttribute("aria-hidden", "true");
+
+			return img;
+		};
+
+		const setIconStatus = (message: string, className: string, iconSrc: string) => {
+			if (!status) return;
+			const text = document.createElement("span");
+			text.textContent = message;
+
+			status.className = className;
+			status.replaceChildren(createStatusIcon(iconSrc), text);
+		};
+
+		const setStatus = (message: string, type: "idle" | "success" | "error" = "idle") => {
+			if (!status) return;
+			const baseClass = "mt-5 rounded-2xl border bg-ink p-5 font-mono text-sm";
+
+			if (type === "success") {
+				setIconStatus(
+					message,
+					`${baseClass} exercise-status-success flex items-start gap-3`,
+					status.dataset.successIcon ?? "",
+				);
+				return;
+			}
+
+			if (type === "error") {
+				setIconStatus(
+					message,
+					`${baseClass} exercise-status-error flex items-start gap-3`,
+					status.dataset.errorIcon ?? "",
+				);
+				return;
+			}
+
+			status.className = `${baseClass} border-line text-muted`;
+			status.textContent = message;
+		};
+
+		button?.addEventListener("click", async () => {
+			if (!button) return;
+
+			button.disabled = true;
+			button.textContent = "Checking...";
+			setStatus("Inspecting the starter performance configuration...");
+
+			try {
+				const response = await fetch("/api/exercise/05", { method: "POST" });
+				const payload = (await response.json()) as CheckResponse;
+
+				if (!response.ok) {
+					throw new Error(payload.error ?? "The server request failed.");
+				}
+
+				if (!payload.passed) {
+					const count = payload.violations?.length ?? 0;
+					setStatus(
+						`Still in baseline mode: ${count} performance anti-pattern${count === 1 ? "" : "s"} detected.`,
+						"error",
+					);
+					return;
+				}
+
+				setStatus("Starter anti-patterns are gone. Now run Lighthouse again and compare.", "success");
+			} catch (error) {
+				const message = error instanceof Error ? error.message : "Unknown error";
+				setStatus(`Exercise check failed: ${message}`, "error");
+			} finally {
+				button.disabled = false;
+				button.textContent = "Check obvious anti-patterns";
+			}
+		});
+	</script>
+</Layout>
